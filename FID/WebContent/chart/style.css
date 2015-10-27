@@ -1,0 +1,29 @@
+header{
+  border-bottom:1px solid gray;
+  padding:20px;
+}
+nav {
+  border-right:1px solid gray;
+  width:200px;
+  height:600px;
+  float:left;
+}
+nav ol{
+  list-style:none;
+}
+.regionSelect{
+	padding:5px;
+}
+iframe{
+  float:left;
+  padding:20px;
+  border:none;
+  position: absolute;
+  width: 1000px;
+  height: 1000px;
+  
+}
+body{
+			background-image:url('back.jpg');
+			background-repeat:repeat;
+			}

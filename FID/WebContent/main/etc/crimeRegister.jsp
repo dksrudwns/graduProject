@@ -11,6 +11,7 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Crime Register</title>
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+		<script src="../../js/checkinfo.js"></script>
 	<script type="text/javascript">
 		
 		var checkPn = "0";
@@ -143,11 +144,11 @@
 	         <form class="form-horizontal" action="/FID/crimRegiser.do" method="post" name="regForm">
 	            <div class="form-group form-inline">
 	                  <label for="name" class="control-label col-sm-2">이름</label>
-	                  <input type="text" class="form-control" id="name" name="name" size="15" />
+	                  <input type="text" required="required" class="form-control" id="name" name="name" size="15" />
 	            </div>
 	            <div class="form-group form-inline">
 	                  <label for="idNum1" class="control-label col-sm-2">주민등록번호</label>
-	                  <input type="text" class="form-control" id="idNum1" name="idNum1" size="6" /> - <input type="text" class="form-control" id="idNum2" name="idNum2" size="7" />
+	                  <input type="text" class="form-control" id="idNum1" name="idNum1" size="6" required="required" maxlength="6" onkeypress="onlyNumber()" onkeyup="checkNum(this)" pattern="[0-9]{6}" title="6자리 숫자"/> - <input type="text" class="form-control" id="idNum2" name="idNum2" size="7" maxlength="7" required="required" onkeypress="onlyNumber()" onkeyup="checkNum(this)" pattern="[0-9]{7}" title="7자리 숫자"/>
 	                  <input type="button" value="유효확인" onclick="numCheck(this.form.idNum1.value+this.form.idNum2.value)" />
 	            </div>
 		        <div class="form-group form-inline">
@@ -162,19 +163,19 @@
 	            </div>
 	            <div class="form-group form-inline">
 		            <label for="rank" class="control-label col-sm-2">범죄 날짜</label>
-		       		<input type="date" class="form-control" name="date" id="date"> 
+		       		<input type="date" class="form-control" name="date" id="date" placeholder="연도-월-일"> 
 	            </div>
 				<div class="form-group form-inline">
 	            	<label for="zip_code" class="control-label col-sm-2">범죄 장소</label>
-		            <input type="text" class="form-control" name="zip_code" id="zip_code" placeholder="우편번호"> 
+		            <input type="text" class="form-control" name="zip_code" id="zip_code" placeholder="우편번호" readonly="readonly" required="required"> 
 		            <input type="button" onclick="Postcode()" value="우편번호 찾기">
 		        </div>
 	            <div class="form-group form-inline">
 	            	<label class="control-label col-sm-2"> </label>
-		            <input type="text" class="form-control" name="sido" id="sido"placeholder="도/시"> 
-		            <input type="text" class="form-control" name="sigungu" id="sigungu" placeholder="군/구"> 
-		            <input type="text" class="form-control" name="detail_1" id="detail_1" placeholder="건물명/동"> 
-		            <input type="text" class="form-control" name="detail_2" id="detail_2" placeholder="세부 주소"><br>
+		            <input type="text" class="form-control" name="sido" id="sido"placeholder="도/시" readonly="readonly"> 
+		            <input type="text" class="form-control" name="sigungu" id="sigungu" placeholder="군/구" readonly="readonly"> 
+		            <input type="text" class="form-control" name="detail_1" id="detail_1" placeholder="건물명/동" readonly="readonly"> 
+		            <input type="text" class="form-control" name="detail_2" id="detail_2" placeholder="세부 주소" required="required"><br>
 	            </div>
 	            <div>
 	            <button class="btn btn-success btn-lg" type="submit" onclick="inputCheck(this.form);">확인</button>
@@ -244,6 +245,6 @@
 	</html>
 	</c:when>
 	<c:otherwise>
-		<c:redirect url="Login.jsp"></c:redirect>	
+		<c:redirect url="../../Login.jsp"></c:redirect>	
 	</c:otherwise>
 </c:choose>

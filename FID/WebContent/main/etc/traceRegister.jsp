@@ -8,11 +8,12 @@
 	<!DOCTYPE html>
 	<html lang="ko">
 	<head>
-	    <meta charset="utf-8"> <!--UTF-8-->
-	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	    <meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Crime Register</title>
-		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <meta charset="utf-8"> <!--UTF-8-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Crime Register</title>
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="../../js/checkinfo.js"></script>
 	<script type="text/javascript">
 		
 		var checkPn = "0";
@@ -145,17 +146,17 @@
 	         <form class="form-horizontal" action="/FID/traceRegister.do" method="post" name="regForm">
 	            <div class="form-group form-inline">
 	                  <label for="name" class="control-label col-sm-2">이름</label>
-	                  <input type="text" class="form-control" id="name" name="name" size="15" />
+	                  <input type="text" class="form-control" id="name" name="name" size="15" required="required"/>
 	            </div>
 	            <div class="form-group form-inline">
 	                  <label for="idNum1" class="control-label col-sm-2">주민등록번호</label>
-	                  <input type="text" class="form-control" id="idNum1" name="idNum1" size="6" /> - <input type="text" class="form-control" id="idNum2" name="idNum2" size="7" />
+	                  <input type="text" class="form-control" id="idNum1" name="idNum1" size="6" maxlength="6" required="required" onkeypress="onlyNumber()" onkeyup="checkNum(this)"/> - <input type="text" class="form-control" id="idNum2" name="idNum2" size="7" maxlength="7" required="required" onkeypress="onlyNumber()" onkeyup="checkNum(this)"/>
 	                  <input type="button" value="유효확인" onclick="numCheck(this.form.idNum1.value+this.form.idNum2.value)" />
 	            </div>
 		        <div class="form-group form-inline">
 		            <label for="rank" class="control-label col-sm-2">수배 유형</label>
-		            <select class="form-control" name="rank" id="rank">
-		            	<option value="0" selected="">선택하세요</option>
+		            <select class="form-control" name="rank" id="rank" required="required" >
+		            	
 								<option value="a">지명수배</option>
 								<option value="b">벌금수배</option>
 								<option value="c">지명통보</option>
@@ -163,11 +164,11 @@
 	            </div>
 	            <div class="form-group form-inline">
 	                  <label for="date" class="control-label col-sm-2">수배 등록일</label>
-	                  <input type="date" class="form-control" id="date" name="date" />
+	                  <input type="date" class="form-control" id="date" name="date" required="required" placeholder="연도-월-일"/>
 	            </div>
 	            <div class="form-group form-inline">
 	                  <label for="T_money" class="control-label col-sm-2">수배 금액</label>
-	                  <input type="number" class="form-control" id="T_money" name="T_money" placeholder="단위:만 원"/>
+	                  <input type="number" class="form-control" id="T_money" name="T_money" placeholder="단위:만 원" required="required"/>
 	            </div>
 	            <div>
 	            <button class="btn btn-success btn-lg" type="submit" onclick="inputCheck(this.form);">확인</button>
@@ -180,7 +181,7 @@
 	</html>
 	</c:when>
 	<c:otherwise>
-		<c:redirect url="Login.jsp"></c:redirect>	
+		<c:redirect url="../../Login.jsp"></c:redirect>	
 	</c:otherwise>
 </c:choose>
 

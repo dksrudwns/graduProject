@@ -37,7 +37,7 @@ body {
 }
 </style>
 </head>
-<body>
+<body >
 	<div class="container">
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container-fluid">
@@ -78,8 +78,8 @@ body {
 			</div>
 		</nav>
 		<div class="list-group" style="width: 175px; display: inline-block;">
-			<a href="#" class="list-group-item" onclick="changeColumn()">특이사항 통계</a> 
-			<a href="#" class="list-group-item" onclick="changePie()">특이상항 세부 통계</a> 
+			<a href="#" class="list-group-item" onclick="changeColumn()">특이사항 세부 통계</a> 
+			<a href="#" class="list-group-item" onclick="changePie()">특이사항  통계</a> 
 			<a href="#" class="list-group-item" onclick="showMonthChart()">월별통계</a> 
 			<a href="#" class="list-group-item" onclick="showAreaChart()">행방불명통계</a>
 		</div>

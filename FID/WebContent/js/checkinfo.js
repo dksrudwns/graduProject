@@ -23,6 +23,12 @@ function reset(id){
    if(id=="idNum2"){
       document.getElementById("idNum2").value="";
    }
+   if(id=="pro_idNum1"){
+      document.getElementById("pro_idNum1").value="";   
+   }
+   if(id=="pro_idNum2"){
+      document.getElementById("pro_idNum2").value="";
+   }
    if(id=="name"){
       document.getElementById("name").value="";
    }

@@ -52,6 +52,39 @@ public class peopleInfoDAO {
 		return ri;
 
 	}
+	public int insertPeople(peopleInfoDTO pDTO) {
+		int ri = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = "insert INTO peopleInfo values (?,?,?,?)";
+
+		try {
+			conn = DriverManager.getConnection(this.url, this.id, this.pw);
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, pDTO.getPeopleNum());
+			pstmt.setString(2, pDTO.getName());
+			pstmt.setString(3, pDTO.getZipcode());
+			pstmt.setString(4, pDTO.getDetailAdress());
+			ri = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return ri;
+
+	}
 
 	public peopleInfoDTO selectPeopleInfo(String num) {
 		peopleInfoDTO ri=null;

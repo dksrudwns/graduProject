@@ -60,6 +60,44 @@ public class CrimeDAO {
 
 		return ri;
 	}
+	public JSONArray selectCountArea(String sido) {
+
+		JSONArray jarray = new JSONArray();
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = "select c.CrimeCode, Count(c.CrimeCode) as Count from CrimeAll c, AddressCode a where c.origin_address = a.zipcode and a.sido = ? group by c.CrimeCode";
+
+		try {
+			conn = DriverManager.getConnection(this.url, this.id, this.pw);
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1,sido);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				
+				String typeCount = rs.getString("Count");
+				jarray.put(typeCount);
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+
+		return jarray;
+	}
 
 	public JSONArray selectCrimeInfoLimt5() {
 
@@ -112,6 +150,7 @@ public class CrimeDAO {
 
 		return jarray;
 	}
+	
 
 	public JSONObject selectCrimeYearInfo(String year) {
 

@@ -27,11 +27,11 @@ public class PeopleInDAO {
 		
 		AddressCodeDAO aDAO = new AddressCodeDAO();
 		AddressCodeDTO aDTO = new AddressCodeDTO(dto.getZipCode(), dto.getSido(), dto.getSigungu(),dto.getDetail());
-		aDAO.insertAddressCode(aDTO);
+		aDAO.insertNewAddressCode(aDTO);
 		
 		peopleInfoDAO peDAO = new peopleInfoDAO();
 		peopleInfoDTO peDTO = new peopleInfoDTO(dto.getPeopleNum(), dto.getName(), dto.getZipCode(), dto.getDetailAddr());
-		peDAO.insertPeopleInfor(peDTO);
+		peDAO.insertPeople(peDTO);
 
 		
 	}

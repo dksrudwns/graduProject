@@ -74,9 +74,6 @@
 				if (vCDTO.size() == 0) {
 			%>
 			<tr>
-				<td>김</td>
-				<td>태</td>
-				<td>훈</td>
 			</tr>
 			<%
 				} else {
@@ -101,19 +98,11 @@
 		<legend>수배</legend>
 		<table border="1">
 			<tr style="background-color: cyan">
-				<th>종류</th>
-				<th>현상금</th>
-				<th>현상태</th>
-				<th>등록일</th>
 			</tr>
 			<%
 				if (vTDTO.size() == 0) {
 			%>
 			<tr>
-				<td>김</td>
-				<td>태</td>
-				<td>훈</td>
-				<td>망</td>
 			</tr>
 			<%
 				} else {
@@ -147,11 +136,6 @@
 				if (vMDTO.size() == 0) {
 			%>
 			<tr>
-				<td>김</td>
-				<td>태</td>
-				<td>훈</td>
-				<td>바</td>
-				<td>보</td>
 			</tr>
 			<%
 				} else {

@@ -16,6 +16,7 @@
 	<script>
 	function myUp(form) {
 		var t = form;
+		if(t)
 	      t.action='/FID/memberUp.do';
 	      t.submit();
 	  }
@@ -104,9 +105,9 @@
 		<c:set var="list" value="${requestScope.list}"></c:set>
 			<c:forEach var="member" items="${list}">
 			<tr>
-				<form method="post" id= "${member.id}">
+				<form method="post" id= "${member.id}"action="/FID/memberUp.do" >
 					<td>${member.id}<input name="id" style='visibility:hidden;display: none;' value="${member.id}"></td>
-					<td><input name="pw" value="${member.pw }" required></td>
+					<td><input name="pw" value="${member.pw }" required="required"></td>
 					<td><select name="rank" id="rank">
 					<c:choose>
 					<c:when test="${member.lv == 1}">
@@ -122,7 +123,7 @@
 					</c:choose>
 					</select></td>
 					<td>${member.pn}</td>
-					<td><input type="button" id="up" name="up" value="up" onclick="myUp(this.form)" /> <input type="button" id="del"name="del" value="del" onclick='myDel(this.form)'/></td>
+					<td><input type="submit" id="up" name="up" value="up" /> <input type="button" id="del"name="del" value="del" onclick='myDel(this.form)'/></td>
 				</form>
 			</tr>
 			</c:forEach>	

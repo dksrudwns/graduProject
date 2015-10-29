@@ -225,6 +225,39 @@ public class MemberDAO {
 
 		return mpw;
 	}
+	
+	public String getlv(String mid) {
+		String mlv = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = "select level from member where id = ?";
+		try {
+			conn = DriverManager.getConnection(this.url, this.id, this.pw);
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, mid);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				mlv = rs.getString("level");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+
+		return mlv;
+	}
 
 	public int updateMember(String mId, String lv, String pw) {
 		int ri = 0;

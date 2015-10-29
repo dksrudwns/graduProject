@@ -72,7 +72,7 @@ public class mfindFace extends HttpServlet {
 				JSONObject obj = ja.getJSONObject(0);
 				faceid = obj.getString("faceId");
 				System.out.println(faceid);
-				response.addHeader("FaceID", "D" + faceid);
+				//response.addHeader("FaceID", "D" + faceid);
 			}
 
 		} catch (Exception e) {

@@ -57,6 +57,42 @@ public class AddressCodeDAO {
 		return ri;
 
 	}
+	
+	public int insertNewAddressCode(AddressCodeDTO dto) {
+
+		int ri = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = "insert INTO AddressCode values (?,?,?,?)";
+		try {
+			conn = DriverManager.getConnection(this.url, this.id, this.pw);
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, dto.getZipcode());
+			pstmt.setString(2, dto.getSido());
+			pstmt.setString(3, dto.getGugun());
+			pstmt.setString(4, dto.getDetail());
+
+			pstmt.executeUpdate();
+			ri = 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return ri;
+
+	}
 
 	public AddressCodeDTO selectAddressCodeDAO(String tzipcode) {
 

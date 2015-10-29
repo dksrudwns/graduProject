@@ -48,7 +48,6 @@
 					title : 'Total',
 					values : [<%=crime1%>,<%=crime2%>,<%=crime3%>,<%=crime4%>,<%=missing1%>,<%=missing2%>,<%=missing3%>,<%=missing4%>,<%=traceA%>,<%=traceB%>,<%=traceC%>],//요소의 값
 					colorset : [ '#FF8C00' ],//요소 색상
-					fields : [ '' ]
 				//어떤그래프인가?
 				},
 				'chartDiv' : 'chart8', //차트를 그릴 DIV 요소의 ID

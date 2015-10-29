@@ -17,36 +17,13 @@
 	var checkPn = "0";
 
 	function inputCheck(f) {
-		if (f.id.value == "") {
-			alert("아이디를 입력해주세요");
-			f.id.focus();
-			return;
-		}
-		if (f.password.value == "") {
-			alert("비밀번호를 입력해주세요");
-			f.password.focus();
-			return;
-		}
-		if (f.repassword.value == "") {
-			alert("확인 비밀번호를 입력해주세요");
-			f.repassword.focus();
-			return;
-		}
+	
 		if (f.repassword.value != f.password.value) {
 			alert("비밀번호가 일치하지 않습니다.");
 			f.repassword.focus();
 			return;
 		}
-		if (f.idNum1.value == "" || f.idNum2.value == "") {
-			alert("주빈번호를 입력하세요");
-			f.idNum1.focus();
-			return;
-		}
-		if (f.rank.value == "0") {
-			alert("계정 등급을 선택해 주세요");
-			f.accountType.focus();
-			return;
-		}
+
 		if(checkId == "0"){
 			alert("아이디 중복을 확인해주세요");
 			f.id.focus();
@@ -61,6 +38,23 @@
 		f.action='/FID/memberInrol.do';
 		f.submit();
 	}
+	function passCheck(){
+		   var pass1 = document.getElementById("password");
+		   var pass2 = document.getElementById("repassword");
+		   var msg = document.getElementById("checkSame");
+		   if(pass1.value!=pass2.value){
+		      msg.innerText="Incorrect!";
+		      msg.style.color="red";
+		      msg.style.opacity=1;
+		   }
+		   else{
+		      msg.innerText="Correct!";
+		      msg.style.color="green";
+		      msg.style.opacity=1;
+		      }
+		}
+	
+	
 	function idCheck(id) {
 		checkId = 1;
 		var wx = 300; //open 할 윈도우 크기 width
@@ -99,6 +93,7 @@
 	}
 
 	</script>
+	<script src="../../js/checkinfo.js"></script>
 	<link href="../../css/bootstrap.min.css" rel="stylesheet">
 	<style>
 	body{
@@ -123,7 +118,7 @@
 	</style>
 </head>
 <body>
-	<div class="container">
+	
 	<div class="container">
 			<nav class="navbar navbar-inverse navbar-fixed-top">
 			  <div class="container-fluid">
@@ -175,25 +170,26 @@
          <form class="form-horizontal" action="/FID/memberInrol.do" method="post" name="regForm">
             <div class="form-group form-inline">
                   <label for="id" class="control-label col-sm-2">ID</label>
-                  <input type="text" class="form-control" id="id" name="id" />
+                  <input type="text" class="form-control" id="id" name="id" required="required"/>
                   <input type="button" onclick="idCheck(this.form.id.value)" value="ID중복확인">
             </div>
             <div class="form-group form-inline">
                   <label for="password" class="control-label col-sm-2">비밀번호</label>
-                  <input type="password" class="form-control" id="password" name="password" />
+                  <input type="password" class="form-control" id="password" name="password" required="required"/>
             </div>
             <div class="form-group form-inline">
                   <label for="repassword" class="control-label col-sm-2">비밀번호확인</label>
-                  <input type="password" class="form-control" id="repassword" name="repassword" />
+                  <input type="password" class="form-control" id="repassword" name="repassword" required="required" onkeyup="passCheck()"/>
+            	  <span id="checkSame" style="opacity:0;"></span>
             </div>
             <div class="form-group form-inline">
                   <label for="idNum1" class="control-label col-sm-2">주민등록번호</label>
-                  <input type="text" class="form-control" id="idNum1" name="idNum1" size="6" /> - <input type="text" class="form-control" id="idNum2" name="idNum2" size="7" />
-                  <input type="button" value="중복확인" onclick="numCheck(this.form.idNum1.value+this.form.idNum2.value)" />
+                  <input type="text" pattern="[0-9]{6}" title="6자리 입력" maxlength="6" required="required"class="form-control" id="idNum1" name="idNum1" size="6" onkeypress="onlyNumber()" onkeyup="checkNum(this)"/> - <input type="text" maxlength="7" pattern="[0-9]{7}" title="7자리 입력" required="required" class="form-control" id="idNum2" name="idNum2" size="7" onkeypress="onlyNumber()" onkeyup="checkNum(this)"/>
+                  <input type="button" required="required" value="중복확인" onclick="numCheck(this.form.idNum1.value+this.form.idNum2.value)" />
             </div>
 	        <div class="form-group form-inline">
 	            <label for="rank" class="control-label col-sm-2">계정 등급</label>
-	            <select class="form-control" name="rank" id="rank">
+	            <select class="form-control" name="rank" id="rank" required="required">
 	            	<option value="0" selected="">선택하세요</option>
 	            	<option value="admin">관리자</option>
 	            	<option value="user">사용자</option>
@@ -210,6 +206,6 @@
 </html>
 	</c:when>
 	<c:otherwise>
-		<c:redirect url="Login.jsp"></c:redirect>	
+		<c:redirect url="../../Login.jsp"></c:redirect>	
 	</c:otherwise>
 </c:choose>

@@ -20,7 +20,7 @@
 		'chartType' : 'donut',
 		'chartSize' : {
 			width : 600,
-			height : 200
+			height : 230
 		}
 	};
 
@@ -43,14 +43,35 @@
 		options.chartDiv = 'chart10'
 			Nwagon.chart(options);
 		
+		
+		
 		});
+	
+	function setChart() {
+		var sido = $('#sido').val();
+		$.get(url, {
+			"sido" : sido
+		}).done(function(data) {
+			$('#chart7').empty();
+			delete options.dataset.values;
+			delete options.dataset.values;
+			options.dataset.values = [];
+			options.dataset.fields = fields;
+			for (key in data) {
+				options.dataset.values.push(data[key]);
+			}
+			console.log(options.dataset.values);
+			Nwagon.chart(options);
+		});
+		
+	}
 </script>
 <meta charset="utf-8">
 </head>
-<body>
+<body >
 	<div class="regionSelect">
 		<h3 style="display: inline-block">시/도 선택</h3>
-		<select id="sido" name="sido">
+		<select id="sido" name="sido" onchange="setChart()">
 			<option value="-" selected="selected">- 시/도 -</option>
 		</select>
 	</div>

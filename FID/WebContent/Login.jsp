@@ -89,14 +89,11 @@ h1 {
 	<h1>F.I.D</h1>
 	<div class="container center-block">
 
-		<form class="form-signin" action="./loginCheck.do" method="post">
+		<form class="form-signin" action="./userLogincheck.do" method="post">
 			<h2 class="form-signin-heading">Login</h2>
 			<label for="inputId" class="sr-only">ID</label> <input type="text" id="inputId" name="id" class="form-control" placeholder="ID" required autofocus> <label for="inputPassword"
 				class="sr-only">Password</label> <input type="password" id="inputPassword" name="pw" class="form-control" placeholder="PW" required>
-			<div class="checkbox">
-				<label> <input type="checkbox" value="remember-me"> Remember me
-				</label>
-			</div>
+		
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 		</form>
 

@@ -7,7 +7,7 @@
 		<!DOCTYPE html>
 		<html lang="ko">
 <head>
-<meta charset="euc-kr">
+<meta charset="utf-8">
 <!--UTF-8-->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -161,7 +161,7 @@ input {
 							</div>
 							<div class="filebox col-md-12 col-md-offset-1" style="top: 5px">
 								<label for="image">업로드</label> <input type="file" id="image"
-									name="image">
+									name="image" required="required">
 							</div>
 						</div>
 					</div>
@@ -179,11 +179,11 @@ input {
 								<input type="text" style="text-align: center; wi dth: 100px;"
 									class="form-control" id="idNum1" name="idNum1" size="6"
 									maxlength="6" onkeypress="onlyNumber()"
-									onkeyup="checkNum(this)"> - <input type="text"
+									onkeyup="checkNum(this)"required="required"> - <input type="text"
 									style="text-align: center; width: 100px;" class="form-control"
 									id="idNum2" name="idNum2" size="7" maxlength="7"
-									onkeypress="onlyNumber()" onkeyup="checkNum(this);isValidJuminNo(idNum1.value,idNum2.value);"> <span
-									id="noCheck"></span>
+									onkeypress="onlyNumber()" required="required" onkeyup="checkNum(this);isValidJuminNo(idNum1.value,idNum2.value);"> <span
+									id="noCheck" ></span>
 							</div>
 						</div>
 					</div>
@@ -193,7 +193,7 @@ input {
 			<div class="form-group form-inline">
 				<label for="zip_code" class="control-label col-sm-2">우편번호</label> <input
 					type="text" class="form-control" name="zip_code" id="zip_code"
-					size="6" maxlength="6" placeholder="우편번호" readonly="readonly">
+					size="6" maxlength="6" placeholder="우편번호" readonly="readonly" required="required">
 				<input type="button" class="btn btn-default" onclick="Postcode()"
 					value="우편번호 찾기">
 			</div>
@@ -212,7 +212,7 @@ input {
 					style="top: 5px; left: 5px; right: 5‒; margin-bottom: 5px; top: 5px; left: 5px; right: 5px;">
 				<input type="text" class="form-control" name="detail_2"
 					id="detail_2" placeholder="세부 주소"
-					style="top: 5px; left: 5px; right: 5‒; margin-bottom: 5px; top: 5px; right: 5px;"><br>
+					style="top: 5px; left: 5px; right: 5‒; margin-bottom: 5px; top: 5px; right: 5px;" required="required"><br>
 			</div>
 			<br>
 			<div class="form-gruop">

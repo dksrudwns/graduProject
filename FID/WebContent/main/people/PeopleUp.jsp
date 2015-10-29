@@ -189,7 +189,7 @@ input {
 					name="sido" style="top: 5px; left: 5px; width: 130px; right: 5‒; margin-bottom: 5px; top: 5px; left: 5px; right: 5px;" id="sido" placeholder="도/시"> <input type="text"readonly="readonly" class="form-control"
 					name="sigungu" value="<%=ad[1] %>" id="sigungu" style="top: 5px; left: 5px; right: 5‒; margin-bottom: 5px; top: 5px; left: 5px; right: 5px;" placeholder="군/구"> <input type="text" readonly="readonly"class="form-control"
 					name="detail_1" id="detail_1" placeholder="건물명/동" value="<%=ad[2] %> <%=ad[3] %>"style="top: 5px; left: 5px; right: 5‒; margin-bottom: 5px; top: 5px; left: 5px; right: 5px;"> <input type="text" class="form-control"
-					name="detail_2" id="detail_2" value="<%=lastad %>" placeholder="세부 주소" style="top: 5px; left: 5px; right: 5‒; margin-bottom: 5px; top: 5px; right: 5px;"><br>
+					name="detail_2" id="detail_2" value="<%=lastad %>" placeholder="세부 주소" style="top: 5px; left: 5px; right: 5‒; margin-bottom: 5px; top: 5px; right: 5px;" required="required"><br>
 			</div>
 			<br>
 			<div class="form-gruop">

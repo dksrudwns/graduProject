@@ -50,17 +50,17 @@ body {
 
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">시민등록<span class="caret"></span></a>
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">인적관리<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="../main/people/PeopleIn.jsp">등록</a></li>
 								<li><a href="../peopleList.do">수정</a></li>
 							</ul></li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">멤버등록<span class="caret"></span></a>
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">사용자관리<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="../main/member/MemberRegister.jsp">등록</a></li>
 								<li><a href="../memberList.do">수정/삭제</a></li>
 							</ul></li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">특이사항<span class="caret"></span></a>
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">신상관리<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li role="presentation" class="dropdown-header" onclick="changeColumn()">등록</li>
 								<li><a href="../main/etc/crimeRegister.jsp">범죄</a></li>
@@ -78,8 +78,8 @@ body {
 			</div>
 		</nav>
 		<div class="list-group" style="width: 175px; display: inline-block;">
-			<a href="#" class="list-group-item" onclick="changeColumn()">특이사항 세부 통계</a> 
-			<a href="#" class="list-group-item" onclick="changePie()">특이사항  통계</a> 
+			<a href="#" class="list-group-item" onclick="changeColumn()">신상관리 세부 통계</a> 
+			<a href="#" class="list-group-item" onclick="changePie()">신상관리  통계</a> 
 			<a href="#" class="list-group-item" onclick="showMonthChart()">월별통계</a> 
 			<a href="#" class="list-group-item" onclick="showAreaChart()">행방불명통계</a>
 		</div>

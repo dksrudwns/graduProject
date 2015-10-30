@@ -36,7 +36,41 @@
 			//alert(this.value); //선택한 이미지 경로 표시
 			readURL(this);
 		});
+
 	});
+	
+	function again() {
+		console.log("test");
+		$('#idNum1').val("");
+		$('#idNum1').attr("readonly",false);
+		$('#idNum2').val("");
+		$('#idNum2').attr("readonly",false);
+		$("#submitBtn").attr("disabled",true);
+		
+	}
+
+	function checkSubmit() {
+		var minNum = $('#idNum1').val() + $('#idNum2').val();
+		var code = $('#zip_code').val();
+		var check;
+		if(code==""){
+			alert("우편번호를 입력하세요");
+		}else{
+			$.get("../../checkminNum.do", {
+				"num" : minNum
+			}).done(function(data) {
+				console.log(data);
+				if (data == 1){
+					alert("주민번호가 중복입니다.");
+				}
+				else{
+					return  true;
+				}
+
+			});
+		}
+		return  false;
+	}
 </script>
 <link href="../../css/bootstrap.min.css" rel="stylesheet">
 <style>
@@ -115,21 +149,21 @@ input {
 					id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-expanded="false">시민등록<span
+							data-toggle="dropdown" role="button" aria-expanded="false">인적관리<span
 								class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="../../main/people/PeopleIn.jsp">등록</a></li>
 								<li><a href="../../peopleList.do">수정</a></li>
 							</ul></li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-expanded="false">멤버등록<span
+							data-toggle="dropdown" role="button" aria-expanded="false">사용자관리<span
 								class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="../../main/member/MemberRegister.jsp">등록</a></li>
 								<li><a href="../../memberList.do">수정/삭제</a></li>
 							</ul></li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-expanded="false">특이사항<span
+							data-toggle="dropdown" role="button" aria-expanded="false">신상관리<span
 								class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li role="presentation" class="dropdown-header">등록</li>
@@ -149,7 +183,8 @@ input {
 			</div>
 		</nav>
 		<form class="form-horizontal" action="../../peopleInrol.do"
-			method="post" name="registerForm" enctype="multipart/form-data">
+			method="post" name="registerForm" enctype="multipart/form-data"
+			onsubmit="return checkSubmit();">
 			<div class="form-group">
 				<div class="form-inline">
 					<div class="form-horiziotal">
@@ -171,19 +206,22 @@ input {
 							<div class="form-inline">
 								<label for="name" class="control-label col-sm-4">이름</label> <input
 									type="text" class="form-control" id="name" name="name" size="6"
-									maxlength="6" onkeyup="checkName(this)">
+									maxlength="6" onkeyup="checkName(this)" required="required" >
 							</div>
 							<br>
 							<div class="form-inline" style="width: 500px;">
 								<label for="idNum1" class="control-label col-sm-4">주민등록번호</label>
 								<input type="text" style="text-align: center; wi dth: 100px;"
 									class="form-control" id="idNum1" name="idNum1" size="6"
-									maxlength="6" onkeypress="onlyNumber()"
-									onkeyup="checkNum(this)"required="required"> - <input type="text"
+									pattern="[0-9]{6}" title="6자리 입력" maxlength="6"
+									onkeypress="onlyNumber()" onkeyup="checkNum(this)"
+									required="required"> - <input type="text"
 									style="text-align: center; width: 100px;" class="form-control"
 									id="idNum2" name="idNum2" size="7" maxlength="7"
-									onkeypress="onlyNumber()" required="required" onkeyup="checkNum(this);isValidJuminNo(idNum1.value,idNum2.value);"> <span
-									id="noCheck" ></span>
+									pattern="[0-9]{7}" title="7자리 입력" onkeypress="onlyNumber()"
+									required="required"
+									onkeyup="isValidJuminNo(idNum1.value,idNum2.value);"> <span
+									id="noCheck" onclick="again()"></span>
 							</div>
 						</div>
 					</div>
@@ -193,16 +231,16 @@ input {
 			<div class="form-group form-inline">
 				<label for="zip_code" class="control-label col-sm-2">우편번호</label> <input
 					type="text" class="form-control" name="zip_code" id="zip_code"
-					size="6" maxlength="6" placeholder="우편번호" readonly="readonly" required="required">
-				<input type="button" class="btn btn-default" onclick="Postcode()"
-					value="우편번호 찾기">
+					size="6" maxlength="6" placeholder="우편번호" readonly="readonly"
+					required="required"> <input type="button"
+					class="btn btn-default" onclick="Postcode()" value="우편번호 찾기">
 			</div>
 			<div class="form-group form-inline">
 				<label for="sido" class="control-label col-sm-2"
 					style="top: 5px; left: 5px; right: 5‒; margin-bottom: 5px; top: 5px; left: 5px; right: 5px;">주소</label>
 				<input type="text" class="form-control" name="sido"
 					style="top: 5px; left: 5px; width: 130px; right: 5‒; margin-bottom: 5px; top: 5px; left: 5px; right: 5px;"
-					id="sido" placeholder="도/시" readonly="readonly"> <input
+					id="sido" placeholder="도/시" required="required" readonly="readonly"> <input
 					readonly="readonly" type="text" class="form-control" name="sigungu"
 					id="sigungu"
 					style="top: 5px; left: 5px; right: 5‒; margin-bottom: 5px; top: 5px; left: 5px; right: 5px;"
@@ -212,7 +250,8 @@ input {
 					style="top: 5px; left: 5px; right: 5‒; margin-bottom: 5px; top: 5px; left: 5px; right: 5px;">
 				<input type="text" class="form-control" name="detail_2"
 					id="detail_2" placeholder="세부 주소"
-					style="top: 5px; left: 5px; right: 5‒; margin-bottom: 5px; top: 5px; right: 5px;" required="required"><br>
+					style="top: 5px; left: 5px; right: 5‒; margin-bottom: 5px; top: 5px; right: 5px;"
+					required="required"><br>
 			</div>
 			<br>
 			<div class="form-gruop">

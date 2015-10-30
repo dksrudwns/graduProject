@@ -61,21 +61,21 @@
 			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			      <ul class="nav navbar-nav">
 			        <li class="dropdown">
-			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">시민등록<span class="caret"></span></a>
+			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">인적관리<span class="caret"></span></a>
 			          <ul class="dropdown-menu" role="menu">
 			            <li><a href="./main/people/PeopleIn.jsp">등록</a></li>
 			            <li><a href="./peopleList.do">수정</a></li>
 			          </ul>
 			        </li>
 			        <li class="dropdown">
-			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">멤버등록<span class="caret"></span></a>
+			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">사용자관리<span class="caret"></span></a>
 			          <ul class="dropdown-menu" role="menu">
 			            <li><a href="./main/member/MemberRegister.jsp">등록</a></li>
 			            <li><a href="./memberList.do">수정/삭제</a></li>
 			          </ul>
 			        </li>
 			        <li class="dropdown">
-			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">특이사항<span class="caret"></span></a>
+			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">신상관리<span class="caret"></span></a>
 			          <ul class="dropdown-menu" role="menu">
 			            <li role="presentation" class="dropdown-header">등록</li>
 			            <li><a href="./main/etc/crimeRegister.jsp">범죄</a></li>

@@ -251,10 +251,10 @@ public class peopleInfoDAO {
 			pstmt.setString(1, mPN);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				ri = 0;
+				ri = 1;
 			}
 			else{
-				ri=-1;
+				ri=0;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -214,10 +214,11 @@ body {
 								placeholder="군/구"> <input type="text" class="sub"
 								name="c_detail_1" id="c_detail_1" placeholder="건물명/동">
 							<td><input class="form-control" type="date" id="date"
-								name="date" value="${crime.crimeDate}"></td>
-							<td><input type="button" value="수정"
+								name="date" value="${crime.crimeDate}" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))
+		       		"></td>
+							<td><input type="button" class="btn btn-default" value="수정"
 								onclick="updateCrime(this.form)"> <input type="button"
-								value="삭제" onclick='deleteCrime(this.form)'></td>
+								value="삭제" class="btn btn-default" onclick='deleteCrime(this.form)'></td>
 						</form>
 					</tr>
 				</c:forEach>
@@ -275,7 +276,8 @@ body {
 									</c:choose>
 							</select></td>
 							<td><input class="form-control" type="date" name="date"
-								value="${trace.traceDate }"></td>
+								value="${trace.traceDate }" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))
+		       		"></td>
 							<td><input type="button" value="수정"
 								onclick="updateTrace(this.form)"> <input type="button"
 								value="삭제" onclick='deleteTrace(this.form)'></td>
@@ -311,7 +313,7 @@ body {
 						<td><input type="text" class="form-control" id="proPhon"
 							style="width: 110px; display: inline-block; height: 25px;"
 							name="proPhon"></td>
-						<td><input type="submit" value="수정"></td>
+						<td><input type="submit" class="btn btn-default" value="수정"></td>
 					</tr>
 				</table>
 
@@ -369,7 +371,8 @@ body {
 								placeholder="군/구"> <input type="text" class="sub"
 								name="m_detail_1" id="m_detail_1" placeholder="건물명/동">
 							<td><input type="date" name="mdate" class="form-control"
-								value="${missing.missingDate}"></td>
+								value="${missing.missingDate}" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))
+		       		"></td>
 							<td><input type="text" class="form-control"
 								name="f_zip_code" id="f_zip_code" value="${missing.findAddress}"
 								onclick="Postcode(this.form,'f')"></td> <input type="text"
@@ -378,7 +381,8 @@ body {
 								placeholder="군/구"> <input type="text" class="sub"
 								name="f_detail_1" id="f_detail_1" placeholder="건물명/동">
 							<td><input type="date" name="fdate" class="form-control"
-								value="${missing.findDate}"></td>
+								value="${missing.findDate}"pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))
+		       		"></td>
 							<td><input type="button" value="수정"
 								onclick="updateMissing(this.form)"> <input type="button"
 								value="삭제" onclick='deleteMissing(this.form)'></td>

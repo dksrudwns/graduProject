@@ -1,6 +1,8 @@
 package chart;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +14,8 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import daoto.CrimeDAO;
+import daoto.MissingDAO;
+import daoto.TraceDAO;
 
 /**
  * Servlet implementation class getAreaData
@@ -39,16 +43,28 @@ public class getAreaData extends HttpServlet {
 		CrimeDAO cDAO = new CrimeDAO();
 		JSONArray jCrime = cDAO.selectCountArea(sido);
 		
-		//실종get
 		//수배get
+		TraceDAO tDAO = new TraceDAO();
+		JSONArray jTrace = tDAO.selectCount();
 		
+		//실종get
+		MissingDAO mDAO = new MissingDAO();
+		JSONArray jMissing = mDAO.selectCountArea(sido);
 		try {
 			jtype.put("Crime", jCrime);
+			jtype.put("Trace", jTrace);
+			jtype.put("Missing", jMissing);
+			System.out.println(jtype);
+			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
-			
+			PrintWriter out = null;
+			response.setContentType("application/x-json; charset=UTF-8");
+			out=response.getWriter();
+			out.print(jtype);
+			out.flush();
 		}
 	}
 

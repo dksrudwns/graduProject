@@ -143,8 +143,8 @@ body {
 		</nav>
 		<div class="container" style="padding-top: 50px;">
 			<!-- Example row of columns -->
-			<div class="row">
-				<div class="col-md-4">
+			<div class="row" style="width: 1300px">
+				<div class="col-md-4" style="width: 410px" >
 					<h2>범죄</h2>
 					<table class="table table-hover" id="crime">
 						<thead>
@@ -158,7 +158,7 @@ body {
 
 					</table>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-4" style="width: 410px">
 					<h2>실종</h2>
 					<table class="table table-hover" id="missing">
 						<thead>
@@ -171,7 +171,7 @@ body {
 						</tbody>
 					</table>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-4" style="width: 410px">
 					<h2>수배</h2>
 					<table class="table table-hover" id="trace">
 						<thead>

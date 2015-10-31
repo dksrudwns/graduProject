@@ -64,6 +64,46 @@ public class TraceDAO {
 		return ri;
 	}
 
+	public JSONArray selectCount() {
+
+		JSONArray jarray = new JSONArray();
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = "select p.code,if(p.cnt is null,0,p.cnt) count from (select t.TraceCode as Code, Count(tr.TraceCode)as cnt  from trace t left outer join TraceAll tr on t.TraceCode=tr.TraceCode group by t.TraceCode)p";
+
+		try {
+			conn = DriverManager.getConnection(this.url, this.id, this.pw);
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+
+				int typeCount = rs.getInt("count");
+
+				jarray.put(typeCount);
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+
+		return jarray;
+	}
+	
+	
 	public JSONArray selectTraceInfoLimt5() {
 
 		JSONArray jarray = new JSONArray();

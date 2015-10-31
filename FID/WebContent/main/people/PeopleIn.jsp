@@ -45,6 +45,8 @@
 		$('#idNum1').attr("readonly",false);
 		$('#idNum2').val("");
 		$('#idNum2').attr("readonly",false);
+		$('#noCheck').text("");
+		$('#noCheck').css('color', '');
 		$("#submitBtn").attr("disabled",true);
 		
 	}
@@ -55,6 +57,7 @@
 		var check;
 		if(code==""){
 			alert("우편번호를 입력하세요");
+			return  false;
 		}else{
 			$.get("../../checkminNum.do", {
 				"num" : minNum
@@ -62,6 +65,7 @@
 				console.log(data);
 				if (data == 1){
 					alert("주민번호가 중복입니다.");
+					return  false;
 				}
 				else{
 					return  true;
@@ -69,7 +73,6 @@
 
 			});
 		}
-		return  false;
 	}
 </script>
 <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -219,8 +222,7 @@ input {
 									style="text-align: center; width: 100px;" class="form-control"
 									id="idNum2" name="idNum2" size="7" maxlength="7"
 									pattern="[0-9]{7}" title="7자리 입력" onkeypress="onlyNumber()"
-									required="required"
-									onkeyup="isValidJuminNo(idNum1.value,idNum2.value);"> <span
+									required="required" onkeyup="checkNum(this);isValidJuminNo(idNum1.value,idNum2.value);"> <span
 									id="noCheck" onclick="again()"></span>
 							</div>
 						</div>

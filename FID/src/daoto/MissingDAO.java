@@ -11,21 +11,21 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 
 public class MissingDAO {
-	
+
 	private String url = "jdbc:mysql://14.63.217.25:3306/project-fid";
 	private String id = "root";
 	private String pw = "5284";
-	
-	public MissingDAO(){
-		
+
+	public MissingDAO() {
+
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public int missingInsert(MissingDTO mDTO){
+
+	public int missingInsert(MissingDTO mDTO) {
 		int ri = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -43,10 +43,10 @@ public class MissingDAO {
 			pstmt.setString(6, mDTO.getFindAddress());
 			pstmt.executeUpdate();
 			ri = 0;
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			ri=1;
+			ri = 1;
 		} finally {
 			try {
 				if (rs != null)
@@ -84,7 +84,8 @@ public class MissingDAO {
 				String findAddress = rs.getString("findAddress");
 				String pri = rs.getString("Pri");
 				// sDTO = new searchLocalDTO(peopleNum, name);
-				result.add(new MissingDTO(missingCode, peopleNum, missingDate, findDate, missingAddress, findAddress, pri));
+				result.add(new MissingDTO(missingCode, peopleNum, missingDate, findDate, missingAddress, findAddress,
+						pri));
 			}
 
 		} catch (Exception e) {
@@ -105,12 +106,11 @@ public class MissingDAO {
 
 		return result;
 	}
-	
-	
-public JSONArray selectMissingInfoLimt5() {
-		
+
+	public JSONArray selectMissingInfoLimt5() {
+
 		JSONArray jarray = new JSONArray();
-		
+
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -121,25 +121,25 @@ public JSONArray selectMissingInfoLimt5() {
 			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				
+
 				JSONObject body = new JSONObject();
-				
+
 				String peopleNum = rs.getString("peopleNum");
 				String mzipcode = rs.getString("missingAddress");
 				body.put("num", peopleNum);
 				// sDTO = new searchLocalDTO(peopleNum, name);
 				peopleInfoDAO peDAO = new peopleInfoDAO();
 				peopleInfoDTO peDTO = peDAO.selectPeopleInfo(peopleNum);
-				
+
 				String name = peDTO.getName();
 				body.put("name", name);
-				
+
 				AddressCodeDAO aDAO = new AddressCodeDAO();
 				AddressCodeDTO aDTO = aDAO.selectAddressCodeDAO(mzipcode);
-				
-				String adr = aDTO.getSido()+" "+aDTO.getGugun();
+
+				String adr = aDTO.getSido() + " " + aDTO.getGugun();
 				body.put("adr", adr);
-				
+
 				jarray.put(body);
 			}
 
@@ -162,130 +162,181 @@ public JSONArray selectMissingInfoLimt5() {
 		return jarray;
 	}
 
+	public JSONArray selectCountArea(String sido) {
 
-public JSONObject selectMissingYearInfo(String year) {
+		JSONArray jarray = new JSONArray();
 
-	JSONObject yearList = new JSONObject();//1년 정보
-	HashMap<String, HashMap<String, Integer>> format = new HashMap<>();// 월
-															
-	Connection conn = null;
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
-	String query = " select * from MissingAll where missingDate like ?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = "select * from (select cri.MissingCode,if(p.cnt is null ,'0',p.cnt) as cnt from (select cr.MissingCode as MissingCode, Count(c.MissingCode) as cnt,a.sido from MissingAll c inner join AddressCode a on c.missingAddress = a.zipcode right outer join missing cr on c.MissingCode = cr.MissingCode where a.sido = ?   group by cr.MissingCode ) p right outer join missing cri on p.MissingCode = cri.MissingCode order by p.MissingCode) k order by k.MissingCode";
 
-	try {
-		conn = DriverManager.getConnection(this.url, this.id, this.pw);
-		pstmt = conn.prepareStatement(query);
-		pstmt.setString(1, year + "%");
-		rs = pstmt.executeQuery();
-		while (rs.next()) {
-			MissingDTO mDTO = new MissingDTO(null, null, null, null, null, null, null);
-			mDTO.setMissingCode(rs.getString("MissingCode"));
-			mDTO.setMissingDate(rs.getString("missingDate"));
-			String[] month = mDTO.getMissingDate().split("-");
-			if (format.containsKey(month[1])) {// 이미 월이 있을때
-				HashMap<String, Integer> subformat = format.get(month[1]);
-				if (subformat.containsKey(mDTO.getMissingCode())) {// 해당 월에 현재 종류가 있음
-					int count = subformat.get(mDTO.getMissingCode());// 해당 종류의  현재횟수를 받아 증가 후 업데이트
-					count++;
-					subformat.put(mDTO.getMissingCode(), count);
-					format.put(month[1], subformat);// 변경된 val을 업데이트
-				} else {// 해당 월에 종류가 없음
-					subformat.put(mDTO.getMissingCode(), 1);
-					;// 해당 월에 최조 종류 등록
-					format.put(month[1], subformat);// 변경된 val을 업데이트
-				}
-
-			} else {// 월값이 없을때 월값에 최초값 넣음
-				HashMap<String, Integer> subformat = new HashMap<>();// 종류와 횟수
-				subformat.put(mDTO.getMissingCode(), 1);//
-				format.put(month[1], subformat);
-			}
-			
-			// json
-			String monthKey = null;
-			for (int i = 1; i <= 12; i++) {
-
-				if (i < 10) {
-					monthKey = "0" + i;
-				} else {
-					monthKey = i+"";
-				}
-				String nMonth = "month"+i;
-				JSONArray item = new JSONArray();// 당월 카운트값
-				if (format.containsKey(monthKey)) {// 있을때
-					HashMap<String, Integer> subformat = format.get(monthKey);// 당월 범죄 종류 카운트값 get
-					
-					
-
-					if (subformat.containsKey("1")) {// 당월에 미아가 있을때
-						int count = subformat.get("1");
-						item.put(count);
-					} else {//없을때
-						item.put(0);
-					}
-					if (subformat.containsKey("2")) {// 당월에 청소년 가출 있을때
-						int count = subformat.get("2");
-						item.put(count);
-					} else {
-						item.put(0);
-					}
-					if (subformat.containsKey("3")) {// 당월에 실종 있을때
-						int count = subformat.get("3");
-						item.put(count);
-					} else {
-						item.put(0);
-					}
-					if (subformat.containsKey("4")) {// 당월에 노인 실종  있을때
-						int count = subformat.get("4");
-						item.put(count);
-					} else {
-						item.put(0);
-					}
-			
-					
-				}else {
-					item.put(0);item.put(0);item.put(0);item.put(0);
-				}
-				yearList.put(nMonth, item);
-			}
-		}
-
-	} catch (Exception e) {
-		// TODO: handle exception
-		e.printStackTrace();
-	} finally {
 		try {
-			if (rs != null)
-				rs.close();
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
-		} catch (Exception e2) {
-			e2.printStackTrace();
+			conn = DriverManager.getConnection(this.url, this.id, this.pw);
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1,sido);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+
+				int typeCount = rs.getInt("cnt");
+				jarray.put(typeCount);
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
 		}
+
+		return jarray;
 	}
-	return yearList;
-}
-	
-	
-	public int MissingCount(){
-		int count= 0;
+
+	public JSONObject selectMissingYearInfo(String year) {
+
+		JSONObject yearList = new JSONObject();// 1년 정보
+		HashMap<String, HashMap<String, Integer>> format = new HashMap<>();// 월
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = " select * from MissingAll where missingDate like ?";
+
+		try {
+			conn = DriverManager.getConnection(this.url, this.id, this.pw);
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, year + "%");
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				MissingDTO mDTO = new MissingDTO(null, null, null, null, null, null, null);
+				mDTO.setMissingCode(rs.getString("MissingCode"));
+				mDTO.setMissingDate(rs.getString("missingDate"));
+				String[] month = mDTO.getMissingDate().split("-");
+				if (format.containsKey(month[1])) {// 이미 월이 있을때
+					HashMap<String, Integer> subformat = format.get(month[1]);
+					if (subformat.containsKey(mDTO.getMissingCode())) {// 해당 월에
+																		// 현재
+																		// 종류가
+																		// 있음
+						int count = subformat.get(mDTO.getMissingCode());// 해당
+																			// 종류의
+																			// 현재횟수를
+																			// 받아
+																			// 증가
+																			// 후
+																			// 업데이트
+						count++;
+						subformat.put(mDTO.getMissingCode(), count);
+						format.put(month[1], subformat);// 변경된 val을 업데이트
+					} else {// 해당 월에 종류가 없음
+						subformat.put(mDTO.getMissingCode(), 1);
+						;// 해당 월에 최조 종류 등록
+						format.put(month[1], subformat);// 변경된 val을 업데이트
+					}
+
+				} else {// 월값이 없을때 월값에 최초값 넣음
+					HashMap<String, Integer> subformat = new HashMap<>();// 종류와
+																			// 횟수
+					subformat.put(mDTO.getMissingCode(), 1);//
+					format.put(month[1], subformat);
+				}
+
+				// json
+				String monthKey = null;
+				for (int i = 1; i <= 12; i++) {
+
+					if (i < 10) {
+						monthKey = "0" + i;
+					} else {
+						monthKey = i + "";
+					}
+					String nMonth = "month" + i;
+					JSONArray item = new JSONArray();// 당월 카운트값
+					if (format.containsKey(monthKey)) {// 있을때
+						HashMap<String, Integer> subformat = format.get(monthKey);// 당월
+																					// 범죄
+																					// 종류
+																					// 카운트값
+																					// get
+
+						if (subformat.containsKey("1")) {// 당월에 미아가 있을때
+							int count = subformat.get("1");
+							item.put(count);
+						} else {// 없을때
+							item.put(0);
+						}
+						if (subformat.containsKey("2")) {// 당월에 청소년 가출 있을때
+							int count = subformat.get("2");
+							item.put(count);
+						} else {
+							item.put(0);
+						}
+						if (subformat.containsKey("3")) {// 당월에 실종 있을때
+							int count = subformat.get("3");
+							item.put(count);
+						} else {
+							item.put(0);
+						}
+						if (subformat.containsKey("4")) {// 당월에 노인 실종 있을때
+							int count = subformat.get("4");
+							item.put(count);
+						} else {
+							item.put(0);
+						}
+
+					} else {
+						item.put(0);
+						item.put(0);
+						item.put(0);
+						item.put(0);
+					}
+					yearList.put(nMonth, item);
+				}
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return yearList;
+	}
+
+	public int MissingCount() {
+		int count = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String query = "select count(MissingCode) as count from MissingAll";
-		ResultSet rs =null;
+		ResultSet rs = null;
 		try {
-			conn = DriverManager.getConnection(this.url,this.id,this.pw);
+			conn = DriverManager.getConnection(this.url, this.id, this.pw);
 			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				count = rs.getInt("count");
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-		}finally {
+		} finally {
 			try {
 				if (rs != null)
 					rs.close();
@@ -300,13 +351,13 @@ public JSONObject selectMissingYearInfo(String year) {
 
 		return count;
 	}
-	
-	public HashMap<String , Integer> missingDetailCount() {
-		int count1= 0;
+
+	public HashMap<String, Integer> missingDetailCount() {
+		int count1 = 0;
 		int count2 = 0;
 		int count3 = 0;
 		int count4 = 0;
-		HashMap<String , Integer> map = new HashMap<String , Integer>();
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String query = "select count(if(MissingCode='1',MissingCode,null))'1',count(if(MissingCode='2',MissingCode,null))'2',count(if(MissingCode= '3',MissingCode,null))'3',count(if(MissingCode= '4',MissingCode,null))'4' from MissingAll";
@@ -342,13 +393,13 @@ public JSONObject selectMissingYearInfo(String year) {
 
 		return map;
 	}
-	
-	public HashMap<String , Integer> missingDetailCountLocal(String sido, String gugun){
-		int count1= 0;
+
+	public HashMap<String, Integer> missingDetailCountLocal(String sido, String gugun) {
+		int count1 = 0;
 		int count2 = 0;
 		int count3 = 0;
 		int count4 = 0;
-		HashMap<String , Integer> map = new HashMap<String , Integer>();
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String query = "select count(if(MissingCode='1',MissingCode,null))'1',count(if(MissingCode='2',MissingCode,null))'2',count(if(MissingCode= '3',MissingCode,null))'3',count(if(MissingCode= '4',MissingCode,null))'4' from MissingAll c,AddressCode a where c.missingAddress = a.zipcode and sido = ? and gugun = ? ";
@@ -386,8 +437,8 @@ public JSONObject selectMissingYearInfo(String year) {
 
 		return map;
 	}
-	
-	public int missingDelete(MissingDTO mDTO){
+
+	public int missingDelete(MissingDTO mDTO) {
 		int ri = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -400,10 +451,10 @@ public JSONObject selectMissingYearInfo(String year) {
 			pstmt.setString(1, mDTO.getPri());
 			pstmt.executeUpdate();
 			ri = 0;
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			ri=1;
+			ri = 1;
 		} finally {
 			try {
 				if (rs != null)
@@ -419,8 +470,8 @@ public JSONObject selectMissingYearInfo(String year) {
 
 		return ri;
 	}
-	
-	public int updateMissing(MissingDTO mDTO){
+
+	public int updateMissing(MissingDTO mDTO) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -457,5 +508,5 @@ public JSONObject selectMissingYearInfo(String year) {
 
 		return result;
 	}
-	
+
 }

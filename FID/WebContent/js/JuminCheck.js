@@ -2,13 +2,13 @@ function isValidJuminNo(jumin1, jumin2) {
   var btn = document.getElementById("submitBtn");
   var txt = document.getElementById("noCheck");
   var yy     = jumin1.substr(0,2);        // �⵵
-  var mm     = jumin1.substr(2,2);        // ��
+  var mm     = jumin1.substr(2,2);       // ��
   var dd     = jumin1.substr(4,2);        // ��
   var genda  = jumin2.substr(0,1);        // ����
   var msg, ss, cc;
   // ���ڰ� �ƴ� ���� �Է��� ���
   if (!isNumeric(jumin1)) {
-	  txt.innerText = "유효하지 않습니다.";
+	  txt.innerText = "사용 불가";
 	  txt.style.color = "red";
 	  btn.disabled = true;
     return false;
@@ -16,7 +16,7 @@ function isValidJuminNo(jumin1, jumin2) {
   
   // ���̰� 6�� �ƴ� ���
   if (jumin1.length != 6) {
-	  txt.innerText = "유효하지 않습니다.";
+	  txt.innerText = "사용 불가";
 	  txt.style.color = "red";
 	  btn.disabled = true;
     return false;
@@ -29,7 +29,7 @@ function isValidJuminNo(jumin1, jumin2) {
       || mm > "12" 
       || dd < "01" 
       || dd > "31") {
-	  txt.innerText = "유효하지 않습니다.";
+	  txt.innerText = "사용 불가";
 	  txt.style.color = "red";
 	  btn.disabled = true;
     return false;
@@ -37,14 +37,14 @@ function isValidJuminNo(jumin1, jumin2) {
   
   // ���ڰ� �ƴ� ���� �Է��� ���
   if (!isNumeric(jumin2)) {
-	  txt.innerText = "유효하지 않습니다.";
+	  txt.innerText = "사용 불가";
 	  txt.style.color = "red";
 	  btn.disabled = true;
     return false;
   }
   // ���̰� 7�� �ƴ� ���
   if (jumin2.length != 7) {
-	  txt.innerText = "유효하지 않습니다.";
+	  txt.innerText = "사용 불가";
 	  txt.style.color = "red";
 	  btn.disabled = true;
     return false;
@@ -52,7 +52,7 @@ function isValidJuminNo(jumin1, jumin2) {
   
   // �����κ��� 1 ~ 4 �� �ƴ� ���
   if (genda < "1" || genda > "4") {
-	  txt.innerText = "유효하지 않습니다.";
+	  txt.innerText = "사용 불가";
 	  txt.style.color = "red";
 	  btn.disabled = true;
     return false;
@@ -62,7 +62,7 @@ function isValidJuminNo(jumin1, jumin2) {
   cc = (genda == "1" || genda == "2") ? "19" : "20";
   // ù��° �ڷῡ�� ������(YYMMDD) ���� �� ��¥ ���� �˻�
   if (isValidDate(cc+yy+mm+dd) == false) {
-	  txt.innerText = "유효하지 않습니다.";
+	  txt.innerText = "사용 불가";
 	  txt.style.color = "red";
 	  btn.disabled = true;
     return false;
@@ -70,7 +70,7 @@ function isValidJuminNo(jumin1, jumin2) {
   
   // Check Digit �˻�
   if (!isSSN(jumin1, jumin2)) {
-	  txt.innerText = "유효하지 않습니다.";
+	  txt.innerText = "사용 불가";
 	  txt.style.color = "red";
 	  btn.disabled = true;
     return false;
@@ -92,7 +92,7 @@ function isValidDate(iDate) {
   oDate.setMonth(parseInt(iDate.substring(4, 6)) - 1);
   oDate.setDate(iDate.substring(6));
   if( oDate.getFullYear()     != iDate.substring(0, 4) 
-      || oDate.getMonth() + 1 != iDate.substring(4, 6) 
+      || oDate.getMonth()  != iDate.substring(4, 6) 
       || oDate.getDate()      != iDate.substring(6) ){
      
     return false;

@@ -97,7 +97,7 @@
 							<input id="num" name="num" value="${person.peopleNum}" style="display: none;" >
 							<td>${person.zipcode}</td>
 							<td>${person.detailAdress}</td>
-							<td><input type="submit" name="up" value="up"></td>
+							<td><input type="submit" class="btn btn-default" name="up" value="수정"></td>
 						</form>	
 					</tr>
 

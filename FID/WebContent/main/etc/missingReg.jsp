@@ -144,6 +144,35 @@ form {
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
+.filebox label {
+	cursor: pointer;
+	border: 1px solid #ebebeb;
+	border-bottom-color: #e2e2e2;
+	border-radius: .25em;
+	color: #333;
+	background-color: #fff;
+	border-color: #ccc;
+	display: inline-block;
+	padding: 6px 12px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+}
+
+.filebox input[type="file"] { /* 파일 필드 숨기기 */
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
 </style>
 </head>
 <body>
@@ -229,14 +258,14 @@ form {
 				<label for="idNum1" class="control-label col-sm-2">주민등록번호</label> <input
 					type="text" class="form-control" id="idNum1" name="idNum1" size="6" maxlength="6" onkeypress="onlyNumber()" required="required" onkeyup="checkNum(this)"/>
 				- <input type="text" class="form-control" id="idNum2" name="idNum2"
-					size="7" maxlength="7" onkeypress="onlyNumber()" required="required" onkeyup="checkNum(this)"/> <input type="button" value="유효확인"
+					size="7" maxlength="7" onkeypress="onlyNumber()" required="required" onkeyup="checkNum(this)"/> <input type="button" class="btn btn-default" value="유효확인"
 					onclick="numCheck(this.form.idNum1.value+this.form.idNum2.value)" />
 			</div>
 
 			<div class="form-group form-inline">
 				<label for="rank" class="control-label col-sm-2">실종 유형</label> <select
 					class="form-control" name="rank" id="rank" required="required">
-					<option value="0" selected="">선택하세요</option>
+					<option value="" selected="">선택하세요</option>
 					<option value="1">미아</option>
 					<option value="2">청소년가출</option>
 					<option value="3">실종</option>
@@ -246,12 +275,13 @@ form {
 			<div class="form-group form-inline">
 				<label for="missingDate" class="control-label col-sm-2">실종날짜</label>
 				<input type="date" class="form-control" name="missingDate"
-					id="missingDate" placeholder="연도-월-일" required="required">
+					id="missingDate" placeholder="연도-월-일" required="required" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))
+		       		">
 			</div>
 			<div class="form-group form-inline">
 				<label for="zip_code" class="control-label col-sm-2">실종 장소</label> <input
 					type="text" class="form-control" name="zip_code" id="zip_code"
-					placeholder="우편번호" readonly="readonly" required="required"> <input type="button"
+					placeholder="우편번호" readonly="readonly" required="required"> <input type="button" class="btn btn-default"
 					onclick="Postcode()" value="우편번호 찾기">
 			</div>
 			<div class="form-group form-inline">
@@ -273,7 +303,7 @@ form {
 					name="pro_idNum1" size="6" maxlength="6" onkeypress="onlyNumber()" required="required" onkeyup="checkNum(this)"/> - <input type="text"
 					class="form-control" id="pro_idNum2" name="pro_idNum2"
 					maxlength="7" size="7" onkeypress="onlyNumber()" required="required" onkeyup="checkNum(this)"/> <input type="button" value="유효확인"
-					onclick="numCheck(this.form.pro_idNum1.value+this.form.pro_idNum2.value)" />
+					class="btn btn-default" onclick="numCheck(this.form.pro_idNum1.value+this.form.pro_idNum2.value)" />
 			</div>
 			<div>
 				<button class="btn btn-success btn-lg" type="submit"

@@ -61,7 +61,6 @@
 		}).done(function(data) {
 			$('#chart7').empty();
 			delete options.dataset.values;
-			delete options.dataset.values;
 			options.dataset.values = [];
 			options.dataset.fields = fields;
 			for (key in data) {

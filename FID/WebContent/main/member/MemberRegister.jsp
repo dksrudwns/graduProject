@@ -171,7 +171,7 @@
             <div class="form-group form-inline">
                   <label for="id" class="control-label col-sm-2">ID</label>
                   <input type="text" class="form-control" id="id" name="id" required="required"/>
-                  <input type="button" onclick="idCheck(this.form.id.value)" value="ID중복확인">
+                  <input type="button" class="btn btn-default" onclick="idCheck(this.form.id.value)" value="ID중복확인">
             </div>
             <div class="form-group form-inline">
                   <label for="password" class="control-label col-sm-2">비밀번호</label>
@@ -185,12 +185,12 @@
             <div class="form-group form-inline">
                   <label for="idNum1" class="control-label col-sm-2">주민등록번호</label>
                   <input type="text" pattern="[0-9]{6}" title="6자리 입력" maxlength="6" required="required"class="form-control" id="idNum1" name="idNum1" size="6" onkeypress="onlyNumber()" onkeyup="checkNum(this)"/> - <input type="text" maxlength="7" pattern="[0-9]{7}" title="7자리 입력" required="required" class="form-control" id="idNum2" name="idNum2" size="7" onkeypress="onlyNumber()" onkeyup="checkNum(this)"/>
-                  <input type="button" required="required" value="중복확인" onclick="numCheck(this.form.idNum1.value+this.form.idNum2.value)" />
+                  <input type="button" class="btn btn-default" required="required" value="중복확인" onclick="numCheck(this.form.idNum1.value+this.form.idNum2.value)" />
             </div>
 	        <div class="form-group form-inline">
 	            <label for="rank" class="control-label col-sm-2">계정 등급</label>
 	            <select class="form-control" name="rank" id="rank" required="required">
-	            	<option value="0" selected="">선택하세요</option>
+	            	<option value="" selected="">선택하세요</option>
 	            	<option value="admin">관리자</option>
 	            	<option value="user">사용자</option>
 	            </select>

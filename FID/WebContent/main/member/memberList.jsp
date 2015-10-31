@@ -123,7 +123,7 @@
 					</c:choose>
 					</select></td>
 					<td>${member.pn}</td>
-					<td><input type="submit" id="up" name="up" value="up" /> <input type="button" id="del"name="del" value="del" onclick='myDel(this.form)'/></td>
+					<td><input type="submit" class="btn btn-default" id="up" name="up" value="수정" /> <input type="button" class="btn btn-default" id="del"name="del" value="삭제" onclick='myDel(this.form)'/></td>
 				</form>
 			</tr>
 			</c:forEach>	

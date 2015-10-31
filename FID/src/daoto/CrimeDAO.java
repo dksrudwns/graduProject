@@ -67,7 +67,7 @@ public class CrimeDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String query = "select c.CrimeCode, Count(c.CrimeCode) as Count from CrimeAll c, AddressCode a where c.origin_address = a.zipcode and a.sido = ? group by c.CrimeCode";
+		String query = "select * from (select cri.CrimeCode,if(p.cnt is null ,'0',p.cnt) as cnt from (select cr.CrimeCode as CrimeCode, Count(c.CrimeCode) as cnt,a.sido from CrimeAll c inner join AddressCode a on c.origin_address = a.zipcode right outer join crime cr on c.CrimeCode = cr.CrimeCode where a.sido = ?   group by cr.CrimeCode ) p right outer join crime cri on p.CrimeCode = cri.CrimeCode order by p.CrimeCode) k order by k.CrimeCode";
 
 		try {
 			conn = DriverManager.getConnection(this.url, this.id, this.pw);
@@ -76,7 +76,7 @@ public class CrimeDAO {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				
-				String typeCount = rs.getString("Count");
+				int typeCount = rs.getInt("cnt");
 				jarray.put(typeCount);
 			}
 
@@ -95,7 +95,6 @@ public class CrimeDAO {
 				e2.printStackTrace();
 			}
 		}
-
 		return jarray;
 	}
 

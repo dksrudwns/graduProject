@@ -49,21 +49,40 @@
 	
 	function setChart() {
 		var sido = $('#sido').val();
-		$.get(url, {
+		$.get("../getAreaData.do", {
 			"sido" : sido
 		}).done(function(data) {
-			$('#chart7').empty();
+			$('#chart8').empty();
 			delete options.dataset.values;
-			delete options.dataset.values;
-			options.dataset.values = [];
-			options.dataset.fields = fields;
-			for (key in data) {
-				options.dataset.values.push(data[key]);
-			}
+			delete options.dataset.fields;
+			options.chartDiv = null;
+			options.chartDiv = 'chart8'
+			options.dataset.values = data.Crime;
+			options.dataset.fields = [ '살인', '절도', '폭행', '성폭행' ];
 			console.log(options.dataset.values);
 			Nwagon.chart(options);
+			
+			$('#chart9').empty();
+			delete options.dataset.values;
+			delete options.dataset.fields;
+			options.chartDiv = null;
+			options.chartDiv = 'chart9'
+			options.dataset.values = data.Trace;
+			options.dataset.fields = [ '지명수배', '벌금수배', '지명통보'];
+			console.log(options.dataset.values);
+			Nwagon.chart(options);
+			
+			$('#chart10').empty();
+			delete options.dataset.values;
+			delete options.dataset.fields;
+			options.chartDiv = null;
+			options.chartDiv = 'chart10'
+			options.dataset.values = data.Missing;
+			options.dataset.fields = [ '미아', '청소년 가출', '실종', '노인 실종' ];
+			console.log(options.dataset.values);
+			Nwagon.chart(options);
+	
 		});
-		
 	}
 </script>
 <meta charset="utf-8">
@@ -78,12 +97,15 @@
 	<article>
 		<h2 style="font-size: 50px; margin: 5px 5px;">지역 통계</h2>
 		<br>
-		<div id="chart8"><label style="font-size: 45px;margin-left: 50px;">범죄</label></div>
+		<label style="font-size: 45px;margin-left: 50px;">범죄</label>
+		<div id="chart8"></div>
 		<script>
 			Nwagon.chart(options);
 		</script>
-		<div id="chart9"><label style="font-size: 45px;margin-left: 50px;">수배</label></div>
-		<div id="chart10"><label style="font-size: 45px;margin-left: 50px;">실종</label></div>
+		<label style="font-size: 45px;margin-left: 50px;">수배</label>
+		<div id="chart9"></div>
+		<label style="font-size: 45px;margin-left: 50px;">실종</label>
+		<div id="chart10"></div>
 	</article>
 </body>
 </html>

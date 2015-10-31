@@ -177,7 +177,7 @@ input {
 			</div>
 			<div class="form-group form-inline"">
 				<label for="idNum1" class="control-label col-sm-2">주민등록번호</label><label><%=num1 %></label>-<label><%=num2 %></label> <input type="number" style="text-align: center; visibility:hidden;  width: 100px;" class="form-control" id="idNum1" name="idNum1"
-					size="6" maxlength="6"> <input type="number" style="text-align: center;visibility:hidden; width: 100px;" class="form-control" id="idNum2" name="idNum2" size="7" maxlength="7">
+					size="6" maxlength="6" value=<%=num1 %>> <input type="number" style="text-align: center;visibility:hidden; width: 100px;" class="form-control" id="idNum2" name="idNum2" size="7" maxlength="7" value=<%=num2 %>>
 			</div>
 
 			<div class="form-group form-inline">

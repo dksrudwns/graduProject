@@ -214,10 +214,9 @@ public class peopleInfoDAO {
 			conn = DriverManager.getConnection(this.url, this.id, this.pw);
 			pstmt = conn.prepareStatement(query);
 			
-			pstmt.setString(1, pDTO.getName());
-			pstmt.setString(2, pDTO.getZipcode());
-			pstmt.setString(3, pDTO.getDetailAdress());
-			pstmt.setString(4, pDTO.getPeopleNum());
+			pstmt.setString(1, pDTO.getZipcode());
+			pstmt.setString(2, pDTO.getDetailAdress());
+			pstmt.setString(3, pDTO.getPeopleNum());
 			
 			ri = pstmt.executeUpdate();
 		} catch (Exception e) {

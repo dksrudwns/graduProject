@@ -51,7 +51,7 @@ public class memberInrol extends HttpServlet {
 
 		MemberDAO mDAO = new MemberDAO();
 		MemberDTO mDTO = new MemberDTO(id, pw, lv, pn);
-		if (checkp == 0) {
+		if (checkp == 1) {
 			try {
 
 				mDAO.memberInsert(mDTO);
@@ -62,7 +62,7 @@ public class memberInrol extends HttpServlet {
 				response.setCharacterEncoding("EUC-KR");
 				PrintWriter writer = response.getWriter();
 				writer.println("<script type='text/javascript'>");
-				writer.println("alert('정보를 다시 확인하세요.');");
+				writer.println("alert('주민번호를 다시 확인하세요.');");
 				writer.println("history.go(-1);");
 				writer.println("</script>");
 				writer.flush();
@@ -73,7 +73,6 @@ public class memberInrol extends HttpServlet {
 			response.setCharacterEncoding("EUC-KR");
 			PrintWriter writer = response.getWriter();
 			writer.println("<script type='text/javascript'>");
-			writer.println("alert('정보를 다시 확인하세요.');");
 			writer.println("history.go(-1);");
 			writer.println("</script>");
 			writer.flush();

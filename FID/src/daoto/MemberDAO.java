@@ -68,7 +68,6 @@ public class MemberDAO {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				System.out.println("1");
 				String id = rs.getString("ID");
 				String pw = rs.getString("Password");
 				String lv = rs.getString("Level");
@@ -107,9 +106,9 @@ public class MemberDAO {
 			pstmt.setString(1, mid);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				ri = 0;
+				ri = 1;
 			} else {
-				ri = -1;
+				ri = 0;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -225,7 +224,7 @@ public class MemberDAO {
 
 		return mpw;
 	}
-	
+
 	public String getlv(String mid) {
 		String mlv = null;
 		Connection conn = null;
@@ -341,14 +340,13 @@ public class MemberDAO {
 			pstmt.setString(1, mid);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				pw=rs.getString("id");
-				if(pw.equals(mid)){
+				pw = rs.getString("id");
+				if (pw.equals(mid)) {
 					ri = true;
-					System.out.println("db결과 있을떄"+ri);
-				}
-				else{
+					System.out.println("db결과 있을떄" + ri);
+				} else {
 					ri = false;
-					System.out.println("db결과 없을때"+ri);
+					System.out.println("db결과 없을때" + ri);
 				}
 			}
 		} catch (Exception e) {

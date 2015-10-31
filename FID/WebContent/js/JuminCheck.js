@@ -75,12 +75,30 @@ function isValidJuminNo(jumin1, jumin2) {
 	  btn.disabled = true;
     return false;
   }
-  txt.innerText = "유효";
-  txt.style.color = "green";
-  btn.disabled = false;
-  document.getElementById("idNum1").readOnly = true;
-  document.getElementById("idNum2").readOnly = true;
-  return true;
+  
+	  $.get("../../checkminNum.do", {
+			"num" : jumin1+jumin2
+		}).done(function(data) {
+			console.log(data);
+			if (data == 1){
+				alert("주민번호가 중복입니다.");
+				txt.innerText = "사용 불가";
+				  txt.style.color = "red";
+				  btn.disabled = true;
+				return false;
+			}
+			else{
+				txt.innerText = "유효";
+				  txt.style.color = "green";
+				  btn.disabled = false;
+				  document.getElementById("idNum1").readOnly = true;
+				  document.getElementById("idNum2").readOnly = true;
+				  return true;
+			}
+		});
+
+  
+  
 }
 function isValidDate(iDate) {
   if( iDate.length != 8 ) {

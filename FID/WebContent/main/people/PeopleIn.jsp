@@ -40,7 +40,6 @@
 	});
 	
 	function again() {
-		console.log("test");
 		$('#idNum1').val("");
 		$('#idNum1').attr("readonly",false);
 		$('#idNum2').val("");
@@ -54,25 +53,13 @@
 	function checkSubmit() {
 		var minNum = $('#idNum1').val() + $('#idNum2').val();
 		var code = $('#zip_code').val();
-		var check;
 		if(code==""){
 			alert("우편번호를 입력하세요");
-			return  false;
+			return false;
 		}else{
-			$.get("../../checkminNum.do", {
-				"num" : minNum
-			}).done(function(data) {
-				console.log(data);
-				if (data == 1){
-					alert("주민번호가 중복입니다.");
-					return  false;
-				}
-				else{
-					return  true;
-				}
-
-			});
+			return true;
 		}
+		
 	}
 </script>
 <link href="../../css/bootstrap.min.css" rel="stylesheet">

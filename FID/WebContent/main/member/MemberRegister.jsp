@@ -21,25 +21,23 @@
 
 		if ($("#password").val() != $("#repassword").val()) {
 			alert("비밀번호가 일치하지 않습니다.");
-			f.repassword.focus();
 			return false;
 		}
 
 		if (checkId == 0) {
 			alert("아이디 중복을 확인해주세요");
-			f.id.focus();
 			return false;
 		}
 		if (checkPn == 0) {
-			alert("주민번호 중복을 확인해주세요");
-			f.password.focus();
+			alert("주민번호 유효을 확인해주세요");
+
 			return false;
 		}
 		if (checkId == 1 && checkPn == 1
 				&& $("#password").val() == $("#repassword").val()) {
 			return true;
 		}
-		console.log(checkId+" "+checkId);
+		console.log(checkId + " " + checkId);
 		return false;
 	}
 
@@ -68,7 +66,6 @@
 		id = $('#id').val();
 		if (id == "") {
 			window.alert("아이디를 입력해주세요");
-			document.regForm.id.focus();
 		} else {
 			$.get("../../checkmemId.do", {
 				"id" : id

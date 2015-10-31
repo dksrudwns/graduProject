@@ -53,17 +53,15 @@
 					.getElementById("image").value;
 	
 		})();
+		
+		
 	</script>
 <script type="text/javascript">
 		var checkPn = "0";
 	
 		function inputCheck(f) {
 	
-			if (f.name.value == "") {
-				alert("이름을 입력해주세요");
-				f.name.focus();
-				return;
-			}
+			
 	
 			if (f.zip_code.value == "") {
 				alert("지역정보를 입력해주세요");

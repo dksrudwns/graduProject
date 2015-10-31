@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import daoto.AddressCodeDAO;
 import daoto.AddressCodeDTO;
 import daoto.CrimeDTO;
+import daoto.peopleInfoDAO;
 import daoto.CrimeDAO;
 
 /**
@@ -36,11 +37,9 @@ public class crimRegiser extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+
 		request.setCharacterEncoding("utf-8");
-		
-		
-		String name = request.getParameter("name");
+
 		String peopleNum = request.getParameter("idNum1") + request.getParameter("idNum2");
 		String crimeCode = request.getParameter("rank");
 		String crimeDate = request.getParameter("date");
@@ -49,24 +48,34 @@ public class crimRegiser extends HttpServlet {
 		String sigungu = request.getParameter("sigungu");
 		String detail = request.getParameter("detail_1");
 
-		AddressCodeDAO aDAO = new AddressCodeDAO();
-		AddressCodeDTO aDTO = new AddressCodeDTO(crimeArea, sido, sigungu,detail);
+		peopleInfoDAO pDAO = new peopleInfoDAO();
+		int checkp = pDAO.confirmPN(peopleNum);
+		if (checkp == 1) {
 
-		CrimeDTO cDTO = new CrimeDTO(crimeCode, peopleNum, crimeArea, crimeDate, null);
-		CrimeDAO cDAO = new CrimeDAO();
-		
+			try {
+				AddressCodeDAO aDAO = new AddressCodeDAO();
+				AddressCodeDTO aDTO = new AddressCodeDTO(crimeArea, sido, sigungu, detail);
 
-		try {
+				CrimeDTO cDTO = new CrimeDTO(crimeCode, peopleNum, crimeArea, crimeDate, null);
+				CrimeDAO cDAO = new CrimeDAO();
 
-			cDAO.crimeInsert(cDTO);
-			aDAO.insertAddressCode(aDTO);
-			response.sendRedirect("main.jsp");
+				cDAO.crimeInsert(cDTO);
+				aDAO.insertAddressCode(aDTO);
+				response.sendRedirect("main.jsp");
 
-		} catch (Exception e) {
+			} catch (Exception e) {
+				response.setCharacterEncoding("EUC-KR");
+				PrintWriter writer = response.getWriter();
+				writer.println("<script type='text/javascript'>");
+				writer.println("history.go(-1);");
+				writer.println("</script>");
+				writer.flush();
+				return;
+			}
+		} else {
 			response.setCharacterEncoding("EUC-KR");
 			PrintWriter writer = response.getWriter();
 			writer.println("<script type='text/javascript'>");
-			writer.println("alert('정보를 다시 확인하세요.');");
 			writer.println("history.go(-1);");
 			writer.println("</script>");
 			writer.flush();

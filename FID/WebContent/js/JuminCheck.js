@@ -8,6 +8,7 @@ function isValidJuminNo(jumin1, jumin2) {
   var msg, ss, cc;
   // ���ڰ� �ƴ� ���� �Է��� ���
   if (!isNumeric(jumin1)) {
+	  console.log("tset");
 	  txt.innerText = "사용 불가";
 	  txt.style.color = "red";
 	  btn.disabled = true;
@@ -16,6 +17,7 @@ function isValidJuminNo(jumin1, jumin2) {
   
   // ���̰� 6�� �ƴ� ���
   if (jumin1.length != 6) {
+	  console.log("tset1");
 	  txt.innerText = "사용 불가";
 	  txt.style.color = "red";
 	  btn.disabled = true;
@@ -31,6 +33,7 @@ function isValidJuminNo(jumin1, jumin2) {
       || dd > "31") {
 	  txt.innerText = "사용 불가";
 	  txt.style.color = "red";
+	  console.log("tset2");
 	  btn.disabled = true;
     return false;
   }
@@ -39,6 +42,7 @@ function isValidJuminNo(jumin1, jumin2) {
   if (!isNumeric(jumin2)) {
 	  txt.innerText = "사용 불가";
 	  txt.style.color = "red";
+	  console.log("tset3");
 	  btn.disabled = true;
     return false;
   }
@@ -46,6 +50,7 @@ function isValidJuminNo(jumin1, jumin2) {
   if (jumin2.length != 7) {
 	  txt.innerText = "사용 불가";
 	  txt.style.color = "red";
+	  console.log("tset4");
 	  btn.disabled = true;
     return false;
   }
@@ -54,6 +59,7 @@ function isValidJuminNo(jumin1, jumin2) {
   if (genda < "1" || genda > "4") {
 	  txt.innerText = "사용 불가";
 	  txt.style.color = "red";
+	  console.log("tset5");
 	  btn.disabled = true;
     return false;
   }
@@ -64,6 +70,7 @@ function isValidJuminNo(jumin1, jumin2) {
   if (isValidDate(cc+yy+mm+dd) == false) {
 	  txt.innerText = "사용 불가";
 	  txt.style.color = "red";
+	  console.log("tset5");
 	  btn.disabled = true;
     return false;
   }
@@ -72,6 +79,7 @@ function isValidJuminNo(jumin1, jumin2) {
   if (!isSSN(jumin1, jumin2)) {
 	  txt.innerText = "사용 불가";
 	  txt.style.color = "red";
+	  console.log("tset6");
 	  btn.disabled = true;
     return false;
   }
@@ -110,7 +118,7 @@ function isValidDate(iDate) {
   oDate.setMonth(parseInt(iDate.substring(4, 6)) - 1);
   oDate.setDate(iDate.substring(6));
   if( oDate.getFullYear()     != iDate.substring(0, 4) 
-      || oDate.getMonth()  != iDate.substring(4, 6) 
+      || oDate.getMonth() +1 != iDate.substring(4, 6) 
       || oDate.getDate()      != iDate.substring(6) ){
      
     return false;

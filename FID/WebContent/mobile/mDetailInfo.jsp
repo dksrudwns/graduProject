@@ -98,6 +98,10 @@
 		<legend>수배</legend>
 		<table border="1">
 			<tr style="background-color: cyan">
+				<th>종류</th>
+				<th>수배금</th>
+				<th>수배상태</th>
+				<th>수배등록일</th>
 			</tr>
 			<%
 				if (vTDTO.size() == 0) {

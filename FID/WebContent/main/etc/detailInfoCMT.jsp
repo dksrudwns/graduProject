@@ -18,7 +18,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="css/bootstrap.min.css" rel="stylesheet">
+<script src="../../js/checkinfo.js"></script>
 <script type="text/javascript">
+
 	function updateCrime(date) {
 		var t = date;
 		t.action = './updateCrime.do';
@@ -83,55 +85,57 @@ body {
 </style>
 <title>대상 세부 정보</title>
 </head>
- <body>
-		  		<div class="container">
-			<nav class="navbar navbar-inverse navbar-fixed-top">
-			  <div class="container-fluid">
-			    <div class="navbar-header">
-			      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-			        <span class="sr-only">Toggle navigation</span>
-			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>
-			      </button>
-			      <a class="navbar-brand" href="./main.jsp">FID</a>
-			    </div>
-			
-			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			      <ul class="nav navbar-nav">
-			        <li class="dropdown">
-			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">인적관리<span class="caret"></span></a>
-			          <ul class="dropdown-menu" role="menu">
-			            <li><a href="./main/people/PeopleIn.jsp">등록</a></li>
-			            <li><a href="./peopleList.do">수정</a></li>
-			          </ul>
-			        </li>
-			        <li class="dropdown">
-			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">사용자관리<span class="caret"></span></a>
-			          <ul class="dropdown-menu" role="menu">
-			            <li><a href="./main/member/MemberRegister.jsp">등록</a></li>
-			            <li><a href="./memberList.do">수정/삭제</a></li>
-			          </ul>
-			        </li>
-			        <li class="dropdown">
-			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">신상관리<span class="caret"></span></a>
-			          <ul class="dropdown-menu" role="menu">
-			            <li role="presentation" class="dropdown-header">등록</li>
-			            <li><a href="./main/etc/crimeRegister.jsp">범죄</a></li>
-			            <li><a href="./main/etc/missingReg.jsp">행방불명</a></li>
-			            <li><a href="./main/etc/traceRegister.jsp">기타수배</a></li>
-			            <li role="presentation" class="divider"></li>
-			            <li><a href="./peopleListforCMT.do">수정/삭제</a></li>
-			          </ul>
-			        </li>
-			        <li><a href="./chart/statistic.jsp">통계</a></li>
-			      </ul>
-			      <form class="navbar-form navbar-right" role="search" method="post" action="logout.jsp">
-			        <button type="submit" class="btn btn-danger">Logout</button>
-			      </form>
-			    </div>
-			  </div>
-			</nav>	
+<body>
+	<div class="container">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="./main.jsp">FID</a>
+				</div>
+
+				<div class="collapse navbar-collapse"
+					id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-expanded="false">인적관리<span
+								class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="./main/people/PeopleIn.jsp">등록</a></li>
+								<li><a href="./peopleList.do">수정</a></li>
+							</ul></li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-expanded="false">사용자관리<span
+								class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="./main/member/MemberRegister.jsp">등록</a></li>
+								<li><a href="./memberList.do">수정/삭제</a></li>
+							</ul></li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-expanded="false">신상관리<span
+								class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li role="presentation" class="dropdown-header">등록</li>
+								<li><a href="./main/etc/crimeRegister.jsp">범죄</a></li>
+								<li><a href="./main/etc/missingReg.jsp">행방불명</a></li>
+								<li><a href="./main/etc/traceRegister.jsp">기타수배</a></li>
+								<li role="presentation" class="divider"></li>
+								<li><a href="./peopleListforCMT.do">수정/삭제</a></li>
+							</ul></li>
+						<li><a href="./chart/statistic.jsp">통계</a></li>
+					</ul>
+					<form class="navbar-form navbar-right" role="search" method="post"
+						action="logout.jsp">
+						<button type="submit" class="btn btn-danger">Logout</button>
+					</form>
+				</div>
+			</div>
+		</nav>
 
 		<table class="table">
 			<tr>
@@ -141,9 +145,6 @@ body {
 							src="./Images/${requestScope.peopleNum}.jpg"
 							style="width: 130px; height: 160px;" />
 					</div>
-					<!-- <div>
-						<img src=src= width="120" height="160" />
-					</div> -->
 				</td>
 				<td>
 					<div>
@@ -164,7 +165,7 @@ body {
 		</table>
 
 		<fieldset id="crime">
-			<table class="crimetable">
+			<table class="table table-striped crimetable">
 				<tr style="background-color: cyan">
 					<th>범죄 종류</th>
 					<th>범죄 지역</th>
@@ -214,11 +215,13 @@ body {
 								placeholder="군/구"> <input type="text" class="sub"
 								name="c_detail_1" id="c_detail_1" placeholder="건물명/동">
 							<td><input class="form-control" type="date" id="date"
-								name="date" value="${crime.crimeDate}" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))
+								name="date" value="${crime.crimeDate}"
+								pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))
 		       		"></td>
 							<td><input type="button" class="btn btn-default" value="수정"
 								onclick="updateCrime(this.form)"> <input type="button"
-								value="삭제" class="btn btn-default" onclick='deleteCrime(this.form)'></td>
+								value="삭제" class="btn btn-default"
+								onclick='deleteCrime(this.form)'></td>
 						</form>
 					</tr>
 				</c:forEach>
@@ -226,7 +229,7 @@ body {
 		</fieldset>
 		<br>
 		<fieldset id="trace">
-			<table class="tracetable">
+			<table class="table table-striped tracetable">
 				<tr style="background-color: cyan">
 					<th>수배 종류</th>
 					<th>수배 금액</th>
@@ -276,7 +279,8 @@ body {
 									</c:choose>
 							</select></td>
 							<td><input class="form-control" type="date" name="date"
-								value="${trace.traceDate }" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))
+								value="${trace.traceDate }"
+								pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))
 		       		"></td>
 							<td><input type="button" value="수정"
 								onclick="updateTrace(this.form)"> <input type="button"
@@ -299,8 +303,12 @@ body {
 						<td>&nbsp;&nbsp;</td>
 						<td>보호자 주민번호</td>
 						<td><input type="text" class="form-control" id="proNum"
-							style="width: 110px; display: inline-block; height: 25px;"
-							name="proNum"></td>
+							required="required" 
+							name="proNum" pattern="[0-9]{11}">
+							<input type="text" style="width: 110px; display: inline-block; height: 25px;" class="form-control" id="proNum"
+					name="proNum" onfocus="defoultPropn()" size="6" pattern="[0-9]{13}" maxlength="13"
+					onkeypress="onlyNumber()" required="required" placeholder="ex)1111111235435"
+					onkeyup="checkNum(this)" /></td>
 						<td><input type="text" class="sub" name="num"
 							value="${requestScope.peopleNum }"></td>
 					</tr>
@@ -318,7 +326,7 @@ body {
 				</table>
 
 			</form>
-			<table class="missingtable">
+			<table class="table table-striped missingtable">
 				<tr style="background-color: cyan">
 					<th>실종 종류</th>
 					<th>실종 지역</th>
@@ -371,7 +379,8 @@ body {
 								placeholder="군/구"> <input type="text" class="sub"
 								name="m_detail_1" id="m_detail_1" placeholder="건물명/동">
 							<td><input type="date" name="mdate" class="form-control"
-								value="${missing.missingDate}" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))
+								value="${missing.missingDate}"
+								pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))
 		       		"></td>
 							<td><input type="text" class="form-control"
 								name="f_zip_code" id="f_zip_code" value="${missing.findAddress}"
@@ -381,7 +390,8 @@ body {
 								placeholder="군/구"> <input type="text" class="sub"
 								name="f_detail_1" id="f_detail_1" placeholder="건물명/동">
 							<td><input type="date" name="fdate" class="form-control"
-								value="${missing.findDate}"pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))
+								value="${missing.findDate}"
+								pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))
 		       		"></td>
 							<td><input type="button" value="수정"
 								onclick="updateMissing(this.form)"> <input type="button"

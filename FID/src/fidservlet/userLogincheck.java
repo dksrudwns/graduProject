@@ -46,18 +46,8 @@ public class userLogincheck extends HttpServlet {
 			String mlv = mDAO.getlv(id);
 
 			//db�뿉 ���옣�맂 鍮꾨�踰덊샇�옉 媛숈�吏� �솗�씤
-			if(mpw.isEmpty()|| !pw.equals(mpw)){
-				response.setCharacterEncoding("euc-kr");
-				PrintWriter writer = response.getWriter();
-				writer.println("<script type='text/javascript'>");
-				writer.println("alert('입력 정보를 다시 한번 확인해주세요.');");
-				writer.println("history.go(-1);");
-				writer.println("</script>");
-				writer.flush();
-				return;
-				
-			}
-			else if (mlv.equals("1") &&pw.equals(mpw)) {
+			
+			if (mlv.equals("1") &&pw.equals(mpw)) {
 				HttpSession sessionL = request.getSession();
 				sessionL.setAttribute("mid", id);
 				sessionL.setAttribute("sessionId", sessionL.getId());
@@ -76,6 +66,17 @@ public class userLogincheck extends HttpServlet {
 				writer.println("</script>");
 				writer.flush();
 				return;
+			}
+			else {
+				response.setCharacterEncoding("euc-kr");
+				PrintWriter writer = response.getWriter();
+				writer.println("<script type='text/javascript'>");
+				writer.println("alert('입력 정보를 다시 한번 확인해주세요.');");
+				writer.println("history.go(-1);");
+				writer.println("</script>");
+				writer.flush();
+				return;
+				
 			}
 
 		} catch (Exception e) {

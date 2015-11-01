@@ -41,7 +41,6 @@ public class loginCheck extends HttpServlet {
 				sessionL.setMaxInactiveInterval(10 * 60);
 				response.setStatus(200);
 				response.addCookie(cookie);
-				response.sendRedirect("main.jsp");
 			}
 
 			else {

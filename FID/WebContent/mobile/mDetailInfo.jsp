@@ -123,11 +123,16 @@
 				} else {
 					for (int i = 0; i < vTDTO.size(); i++) {
 						TraceDTO tDTO = vTDTO.get(i);
+						String con = null;
+						if(tDTO.getTraceCondition().equals("Y"))
+							con ="진행상태";
+						else
+							con = "종료상태";
 			%>
 			<tr>
 				<td><%=tDTO.getTraceCode()%></td>
 				<td><%=tDTO.getT_Money()%></td>
-				<td><%=tDTO.getTraceCondition()%></td>
+				<td><%=con%></td>
 				<td><%=tDTO.getTraceDate()%></td>
 			</tr>
 			<%
@@ -165,17 +170,22 @@
 						MissingAdd = aDTO.getSido() + " " + aDTO.getGugun() + " " + aDTO.getDetail();
 						aDTO = aDAO.selectAddressCodeDAO(mDTO.getFindAddress());
 						if (aDTO == null) {
-							FindAdd = "null";
+							FindAdd = "진행중";
 						} else {
 							FindAdd = aDTO.getSido() + " " + aDTO.getGugun() + " " + aDTO.getDetail();
 						}
-			%>
+						String date = null;
+						if(mDTO.getFindDate().equals(null))
+							date = "진행중";
+						
+			%>			
+			
 			<tr>
 				<td><%=mDTO.getMissingCode()%><%=i%></td>
 				<td><%=MissingAdd%></td>
 				<td><%=mDTO.getMissingDate()%></td>
 				<td><%=FindAdd%></td>
-				<td><%=mDTO.getFindDate()%></td>
+				<td><%=date%></td>
 			</tr>
 			<%
 				}

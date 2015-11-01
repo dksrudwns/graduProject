@@ -296,11 +296,11 @@ body {
 				<c:set var="Name" value="${requestScope.proName }"></c:set>
 				<table>
 					<tr>
-						<th>보호자 이름</th>
+						<th>보호자 이름 :&nbsp;</th>
 						<td>${Name}</td>
-						<th>보호자 수정</th>
+						<th>&nbsp;&nbsp;보호자 수정</th>
 						<td>&nbsp;&nbsp;</td>
-						<td>보호자 주민번호</td>
+						<td>보호자 주민번호 :&nbsp;</td>
 						<td><input type="text"
 							style="width: 110px; display: inline-block; height: 25px;"
 							class="form-control" id="proNum" name="proNum"
@@ -311,11 +311,11 @@ body {
 							value="${requestScope.peopleNum }"></td>
 					</tr>
 					<tr>
-						<th>보호자 전화번호</th>
+						<th>보호자 전화번호 :&nbsp;</th>
 						<td><a data-rel="external" href="tel:${phon}" target="_blank">${phon}</a></td>
 						<td></td>
 						<td></td>
-						<td>보호자 전화번호</td>
+						<td>보호자 전화번호 :&nbsp;</td>
 						<td><input type="text" class="form-control" id="proPhon"
 							style="width: 110px; display: inline-block; height: 25px;"
 							name="proPhon"></td>

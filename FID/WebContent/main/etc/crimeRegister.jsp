@@ -28,7 +28,7 @@
 			return false;
 		}
 		
-		if (checkPn == 1 && $('#zip_code').val() == "") {
+		if (checkPn == 1 && $('#zip_code').val() != "") {
 			return true;
 		}
 		return false;
@@ -152,7 +152,7 @@ form {
 			<div class="form-group form-inline">
 				<label for="rank" class="control-label col-sm-2">범죄 유형</label> <select
 					class="form-control" name="rank" id="rank" required="required">
-					<option value="" selected="">선택하세요</option>
+					<option value="" selected>선택하세요</option>
 					<option value="1">살인</option>
 					<option value="2">절도</option>
 					<option value="3">폭행</option>

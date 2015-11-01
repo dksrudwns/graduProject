@@ -82,8 +82,7 @@ public class missingRegister extends HttpServlet {
 		String faceid = null;
 		String pro_peopleNum = null;
 		String pro_phon = null;
-		
-	
+
 		try {
 
 			File Cfile = new File(savePath + "/" + peopleNum + ".jpg");
@@ -103,25 +102,31 @@ public class missingRegister extends HttpServlet {
 			detail = multi.getParameter("detail_1");
 			detailAddr = detail + ' ' + multi.getParameter("detail_2");
 			pro_peopleNum = multi.getParameter("pro_idNum1") + multi.getParameter("pro_idNum2");
-			pro_phon =multi.getParameter("pro_phon");
-			
-			
+			pro_phon = multi.getParameter("pro_phon");
+
+			if (peopleNum == "" || peopleNum == null || pro_peopleNum == null || pro_peopleNum == "") {
+				response.setCharacterEncoding("EUC-KR");
+				PrintWriter writer = response.getWriter();
+				writer.println("<script type='text/javascript'>");
+				writer.println("alert('정보를 다시 확인하세요.');");
+				writer.println("history.go(-1);");
+				writer.println("</script>");
+				writer.flush();
+				return;
+			}
 
 			Enumeration<?> files = multi.getFileNames();
 
 			while (files.hasMoreElements()) {
 				uname = (String) files.nextElement();
 				rname = multi.getFilesystemName(uname);
-				
-				
 
 			}
-			
-			//파일명 변경 주민번호로 
-			File tname = new File(savePath+"/"+rname);
-			File Rename = new File(savePath+"/"+peopleNum+".jpg");
+
+			// 파일명 변경 주민번호로
+			File tname = new File(savePath + "/" + rname);
+			File Rename = new File(savePath + "/" + peopleNum + ".jpg");
 			tname.renameTo(Rename);
-			
 
 		} catch (Exception e) {
 
@@ -155,25 +160,23 @@ public class missingRegister extends HttpServlet {
 					faceid = obj.getString("faceId");
 					System.out.println(faceid);
 				}
-				
-				
+
 				MissingDAO mDAO = new MissingDAO();
-				MissingDTO mDTO = new MissingDTO(rank, peopleNum, missDate, null, zipCode, null,null);
+				MissingDTO mDTO = new MissingDTO(rank, peopleNum, missDate, null, zipCode, null, null);
 				mDAO.missingInsert(mDTO);
-				
+
 				AddressCodeDTO aDTO = new AddressCodeDTO(zipCode, sido, sigungu, detail);
 				AddressCodeDAO aDAO = new AddressCodeDAO();
 				aDAO.insertAddressCode(aDTO);
-				
+
 				PictureDAO pDAO = new PictureDAO();
 				PictureDTO pDTO = new PictureDTO(peopleNum, faceid);
 				pDAO.insertPicture(pDTO);
-				
+
 				MissingpeDTO mpDTO = new MissingpeDTO(peopleNum, pro_peopleNum, pro_phon);
 				MissingpeDAO mpDAO = new MissingpeDAO();
 				mpDAO.missingpeInsert(mpDTO);
-				
-				
+
 				response.sendRedirect("main.jsp");
 			} catch (Exception e) {
 				// TODO: handle exception

@@ -17,106 +17,117 @@
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="../../js/checkinfo.js"></script>
 <script type="text/javascript">
-		var InputImage = (function loadImageFile() {
-			if (window.FileReader) {
-				var ImagePre;
-				var ImgReader = new window.FileReader();
-				var fileType = /^(?:image\/bmp|image\/gif|image\/jpeg|image\/png|image\/x\-xwindowdump|image\/x\-portable\-bitmap)$/i;
-	
-				ImgReader.onload = function(Event) {
-					if (!ImagePre) {
-						var newPreview = document.getElementById("imagePreview");
-						ImagePre = new Image();
-						ImagePre.style.width = "140px";
-						ImagePre.style.height = "200px";
-						newPreview.appendChild(ImagePre);
-					}
-					ImagePre.src = Event.target.result;
-	
-				};
-	
-				return function() {
-	
-					var img = document.getElementById("image").files;
-	
-					if (!fileType.test(img[0].type)) {
-						alert("이미지 파일을 업로드 하세요");
-						return;
-					}
-	
-					ImgReader.readAsDataURL(img[0]);
+	var InputImage = (function loadImageFile() {
+		if (window.FileReader) {
+			var ImagePre;
+			var ImgReader = new window.FileReader();
+			var fileType = /^(?:image\/bmp|image\/gif|image\/jpeg|image\/png|image\/x\-xwindowdump|image\/x\-portable\-bitmap)$/i;
+
+			ImgReader.onload = function(Event) {
+				if (!ImagePre) {
+					var newPreview = document.getElementById("imagePreview");
+					ImagePre = new Image();
+					ImagePre.style.width = "140px";
+					ImagePre.style.height = "200px";
+					newPreview.appendChild(ImagePre);
 				}
-	
+				ImagePre.src = Event.target.result;
+
+			};
+
+			return function() {
+
+				var img = document.getElementById("image").files;
+
+				if (!fileType.test(img[0].type)) {
+					alert("이미지 파일을 업로드 하세요");
+					return;
+				}
+
+				ImgReader.readAsDataURL(img[0]);
 			}
-	
-			document.getElementById("imagePreview").src = document
-					.getElementById("image").value;
-	
-		})();
-		
-		
-	</script>
+
+		}
+
+		document.getElementById("imagePreview").src = document
+				.getElementById("image").value;
+
+	})();
+</script>
 <script type="text/javascript">
-		var checkPn = "0";
-	
-		function inputCheck(f) {
-	
-			
-	
-			if (f.zip_code.value == "") {
-				alert("지역정보를 입력해주세요");
-				f.zip_code.focus();
-				return;
-			}
-			if (f.idNum1.value == "" || f.idNum2.value == "") {
-				alert("주빈번호를 입력하세요");
-				f.idNum1.focus();
-				return;
-			}
-			if (f.pro_idNum1.value == "" || f.pro_idNum2.value == "") {
-				alert("보호자 주빈번호를 입력하세요");
-				f.pro_idNum1.focus();
-				return;
-			}
-			if (f.pro_phon.value == "") {
-				alert("보호자 전화번호를 입력하세요");
-				f.pro_phon.focus();
-				return;
-			}
-			if (f.rank.value == "0") {
-				alert("실종 종류를 선택해 주세요");
-				f.rank.focus();
-				return;
-			}
-			if (checkPn== "0") {
-				alert("주민번호 중복을 확인해주세요");
-				f.idNum1.focus();
-				return;
-			}
-		
-			f.action = '/FID/missingRegister.do';
-			f.submit();
+	var checkPn = "0";
+	var checkProPn = "0";
+
+	function checkSubmit() {
+		if ($('#zip_code').val() == "") {
+			alert("우편번호를 입력하세요");
+			return false;
 		}
-	
-		function numCheck(num) {
-			checkPn = 1;
-			tm = 1;
-			var wx = 300; //open 할 윈도우 크기 width
-			var wy = 150; //height
-			var sx = screen.width;
-			var sy = screen.height;
-			var x = (sx - wx) / 2;
-			var y = (sy - wy) / 2;
-			if (num == "") {
-				window.alert("주민번호를 입력해주세요");
-				document.registerForm.idNum1.focus();
-			} else {
-				var url = "/FID/num_check.jsp?num=" + num+"&tm="+tm;//URL Get 방식 전송
-				var wr = window.open(url, "주민번호 검색", "width=300,height=250");
-				wr.moveTo(x, y);
-			}
+
+		if ($('#pro_phon').val() == "") {
+			alert("보호자 전화번호를 입력하세요");
+			return false;
 		}
-	</script>
+
+		if (checkPn == 0) {
+			alert("실종자 주민번호 유효을 확인해주세요");
+			return false;
+		}
+		if (checkProPn == 0) {
+			alert("보호자 주민번호 유효을 확인해주세요");
+			return false;
+		}
+
+		if (checkPn == 1 && $('#zip_code').val() != "" && checkProPn == 1 && $('#pro_phon').val() != "") {
+			return true;
+		}
+		return false;
+	}
+
+	function defoultpn() {
+		checkPn = 0;
+	}
+
+	function numCheck() {
+		var num = $('#pro_idNum1').val() + $('#pro_idNum2').val();
+		if (num == "") {
+			window.alert("보호자 주민번호를 입력해주세요");
+		} else {
+			$.get("../../checkminNum.do", {
+				"num" : num
+			}).done(function(data) {
+				console.log(data);
+				if (data == 1) {
+					alert("보호자 등록가능합니다.");
+					checkProPn = 1;
+				} else {
+					alert("보호자의 인적등록부터 하세요.");
+					checkProPn = 0;
+				}
+			});
+		}
+	}
+
+	function numCheckPro() {
+		var num = $('#idNum1').val() + $('#idNum2').val();
+		if (num == "") {
+			window.alert("주민번호를 입력해주세요");
+		} else {
+			$.get("../../checkminNum.do", {
+				"num" : num
+			}).done(function(data) {
+				console.log(data);
+				if (data == 1) {
+					alert("등록가능합니다.");
+					checkPn = 1;
+				} else {
+					alert("인적등록부터 하세요.");
+					checkPn = 0;
+				}
+			});
+		}
+	}
+</script>
 
 
 <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -142,6 +153,7 @@ form {
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
+
 .filebox label {
 	cursor: pointer;
 	border: 1px solid #ebebeb;
@@ -225,7 +237,8 @@ form {
 			</div>
 		</nav>
 		<form class="form-horizontal" action="/FID/missingRegister.do"
-			method="post" name="registerForm" enctype="multipart/form-data">
+			method="post" name="registerForm" enctype="multipart/form-data"
+			onsubmit="return checkSubmit();">
 			<div class="form-group">
 				<label for="image" class="control-label col-sm-2">사진
 					갱신/추가(선택)</label>
@@ -238,32 +251,25 @@ form {
 						<label for="image">업로드</label> <input type="file" id="image"
 							name="image">
 					</div>
-					<!-- <div id="imagePreview">
-							 	<img class="img-thumbnail" id="blah" src="#"
-									style="width: 130px; height: 160px;" />
-							</div>
-							<div class="filebox col-md-12 col-md-offset-1" style="top: 5px">
-								<label for="image">업로드</label> <input type="file" id="image"
-									name="image">
-							</div> -->
 				</div>
 			</div>
 			<div class="form-group form-inline">
-				<label for="name" class="control-label col-sm-2">이름</label> <input
-					type="text" class="form-control" id="name" name="name" required="required"/>
-			</div>
-			<div class="form-group form-inline">
 				<label for="idNum1" class="control-label col-sm-2">주민등록번호</label> <input
-					type="text" class="form-control" id="idNum1" name="idNum1" size="6" maxlength="6" onkeypress="onlyNumber()" required="required" onkeyup="checkNum(this)"/>
-				- <input type="text" class="form-control" id="idNum2" name="idNum2"
-					size="7" maxlength="7" onkeypress="onlyNumber()" required="required" onkeyup="checkNum(this)"/> <input type="button" class="btn btn-default" value="유효확인"
-					onclick="numCheck(this.form.idNum1.value+this.form.idNum2.value)" />
+					type="text" class="form-control" pattern="[0-9]{6}" id="idNum1"
+					name="idNum1" size="6" maxlength="6" onkeypress="onlyNumber()"
+					required="required" onkeyup="checkNum(this)" onfocus="defoultpn()" />
+				- <input type="text" pattern="[0-9]{7}" class="form-control"
+					id="idNum2" name="idNum2" size="7" maxlength="7"
+					onkeypress="onlyNumber()" required="required"
+					onkeyup="checkNum(this)" onfocus="defoultpn()" /> <input
+					type="button" class="btn btn-default" value="유효확인"
+					onclick="numCheck()" />
 			</div>
 
 			<div class="form-group form-inline">
 				<label for="rank" class="control-label col-sm-2">실종 유형</label> <select
 					class="form-control" name="rank" id="rank" required="required">
-					<option value="" selected="">선택하세요</option>
+					<option value="" selected>선택하세요</option>
 					<option value="1">미아</option>
 					<option value="2">청소년가출</option>
 					<option value="3">실종</option>
@@ -273,98 +279,105 @@ form {
 			<div class="form-group form-inline">
 				<label for="missingDate" class="control-label col-sm-2">실종날짜</label>
 				<input type="date" class="form-control" name="missingDate"
-					id="missingDate" placeholder="연도-월-일" required="required" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))
+					id="missingDate" placeholder="연도-월-일" required="required"
+					pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))
 		       		">
 			</div>
 			<div class="form-group form-inline">
 				<label for="zip_code" class="control-label col-sm-2">실종 장소</label> <input
 					type="text" class="form-control" name="zip_code" id="zip_code"
-					placeholder="우편번호" readonly="readonly" required="required"> <input type="button" class="btn btn-default"
-					onclick="Postcode()" value="우편번호 찾기">
+					placeholder="우편번호" readonly="readonly" required="required">
+				<input type="button" class="btn btn-default" onclick="Postcode()"
+					value="우편번호 찾기">
 			</div>
 			<div class="form-group form-inline">
 				<label class="control-label col-sm-2"> </label> <input type="text"
-					class="form-control" name="sido" id="sido" placeholder="도/시" readonly="readonly">
-				<input type="text" class="form-control" name="sigungu" id="sigungu"
-					placeholder="군/구" readonly="readonly"> <input type="text" class="form-control"
-					name="detail_1" id="detail_1" placeholder="건물명/동" readonly="readonly"> <input
-					type="text" class="form-control" name="detail_2" id="detail_2"
+					class="form-control" name="sido" id="sido" placeholder="도/시"
+					readonly="readonly"> <input type="text"
+					class="form-control" name="sigungu" id="sigungu" placeholder="군/구"
+					readonly="readonly"> <input type="text"
+					class="form-control" name="detail_1" id="detail_1"
+					placeholder="건물명/동" readonly="readonly"> <input type="text"
+					class="form-control" name="detail_2" id="detail_2"
 					placeholder="세부 주소"><br>
 			</div>
 			<div class="form-group form-inline">
 				<label for="name" class="control-label col-sm-2">보호자 전화번호</label> <input
-					type="text" class="form-control" id="pro_phon" name="pro_phon" required="required"/>
+					type="text" class="form-control" id="pro_phon" name="pro_phon"
+					required="required" pattern="[0-9]" />
 			</div>
 			<div class="form-group form-inline">
-				<label for="pro_idNum1" class="control-label col-sm-2">보호자 주민번호</label>
-				<input type="text" class="form-control" id="pro_idNum1"
-					name="pro_idNum1" size="6" maxlength="6" onkeypress="onlyNumber()" required="required" onkeyup="checkNum(this)"/> - <input type="text"
+				<label for="pro_idNum1" class="control-label col-sm-2">보호자
+					주민번호</label> <input type="text" class="form-control" id="pro_idNum1"
+					name="pro_idNum1" size="6" pattern="[0-9]{6}" maxlength="6"
+					onkeypress="onlyNumber()" required="required"
+					onkeyup="checkNum(this)" /> - <input type="text"
 					class="form-control" id="pro_idNum2" name="pro_idNum2"
-					maxlength="7" size="7" onkeypress="onlyNumber()" required="required" onkeyup="checkNum(this)"/> <input type="button" value="유효확인"
-					class="btn btn-default" onclick="numCheck(this.form.pro_idNum1.value+this.form.pro_idNum2.value)" />
+					pattern="[0-9]{7}" maxlength="7" size="7" onkeypress="onlyNumber()"
+					required="required" onkeyup="checkNum(this)" /> <input
+					type="button" value="유효확인" class="btn btn-default"
+					onclick="numCheck()" />
 			</div>
 			<div>
-				<button class="btn btn-success btn-lg" type="submit"
-					onclick="inputCheck(this.form);">확인</button>
+				<button class="btn btn-success btn-lg" type="submit">확인</button>
 			</div>
 		</form>
 	</div>
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script>
-	
-			function Postcode() {
-				new daum.Postcode({
-					oncomplete : function(data) {
-						// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-	
-						// 각 주소의 노출 규칙에 따라 주소를 조합한다.
-						// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-						var fullAddr = ''; // 최종 주소 변수
-						var extraAddr = ''; // 조합형 주소 변수
-	
-						// 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-						if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-							fullAddr = data.sido + ' ' + data.sigungu;
-	
-						} else { // 사용자가 지번 주소를 선택했을 경우(J)
-							fullAddr = data.sido + ' ' + data.sigungu;
-						}
-	
-						// 사용자가 선택한 주소가 도로명 타입일때 조합한다.
-						if (data.userSelectedType === 'R') {
-							//법정동명이 있을 경우 추가한다.
-							if (data.bname !== '') {
-								extraAddr += data.bname;
-							}
-							// 건물명이 있을 경우 추가한다.
-							if (data.buildingName !== '') {
-								extraAddr += (extraAddr !== '' ? ' '
-										+ data.buildingName : data.buildingName);
-							}
-	
-						}
-						if (data.userSelectedType === 'J') {
-							//법정동명이 있을 경우 추가한다.
-							if (data.bname !== '') {
-								extraAddr += data.bname;
-							}
-							// 건물명이 있을 경우 추가한다.
-							if (data.postcode !== '') {
-								extraAddr += (extraAddr !== '' ? ' '
-										+ data.postcode : data.postcode);
-							}
-	
-						}
-	
-						// 우편번호와 주소 정보를 해당 필드에 넣는다.
-						document.getElementById('zip_code').value = data.zonecode; //5자리 새우편번호 사용
-						document.getElementById('sido').value = data.sido;
-						document.getElementById('sigungu').value = data.sigungu;
-						document.getElementById('detail_1').value = extraAddr;
+		function Postcode() {
+			new daum.Postcode({
+				oncomplete : function(data) {
+					// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+					// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+					// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+					var fullAddr = ''; // 최종 주소 변수
+					var extraAddr = ''; // 조합형 주소 변수
+
+					// 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+					if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+						fullAddr = data.sido + ' ' + data.sigungu;
+
+					} else { // 사용자가 지번 주소를 선택했을 경우(J)
+						fullAddr = data.sido + ' ' + data.sigungu;
 					}
-				}).open();
-			}
-		</script>
+
+					// 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+					if (data.userSelectedType === 'R') {
+						//법정동명이 있을 경우 추가한다.
+						if (data.bname !== '') {
+							extraAddr += data.bname;
+						}
+						// 건물명이 있을 경우 추가한다.
+						if (data.buildingName !== '') {
+							extraAddr += (extraAddr !== '' ? ' '
+									+ data.buildingName : data.buildingName);
+						}
+
+					}
+					if (data.userSelectedType === 'J') {
+						//법정동명이 있을 경우 추가한다.
+						if (data.bname !== '') {
+							extraAddr += data.bname;
+						}
+						// 건물명이 있을 경우 추가한다.
+						if (data.postcode !== '') {
+							extraAddr += (extraAddr !== '' ? ' '
+									+ data.postcode : data.postcode);
+						}
+
+					}
+
+					// 우편번호와 주소 정보를 해당 필드에 넣는다.
+					document.getElementById('zip_code').value = data.zonecode; //5자리 새우편번호 사용
+					document.getElementById('sido').value = data.sido;
+					document.getElementById('sigungu').value = data.sigungu;
+					document.getElementById('detail_1').value = extraAddr;
+				}
+			}).open();
+		}
+	</script>
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

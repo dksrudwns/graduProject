@@ -206,31 +206,6 @@ body {
 
 								<!-- Wrapper for slides -->
 								<div class="carousel-inner" role="listbox" id="missing-inner">
-									<div class="item active">
-										<img src="./Images/9101011510656.jpg"
-											class=" img-responsive innerimg">
-										<div class="carousel-caption">
-											<h3>누구니?</h3>
-											<p>글쎄...</p>
-
-										</div>
-									</div>
-									<div class="item">
-										<img src="./Images/9101011510656.jpg"
-											class="img-responsive innerimg">
-										<div class="carousel-caption">
-											<h3>아이유</h3>
-											<p>금요일밤에 만나요</p>
-										</div>
-									</div>
-									<div class="item">
-										<img src="./Images/9101011510656.jpg" class="img-responsive">
-										<div class="carousel-caption">
-											<h3>장기업</h3>
-											<p>장기하가 아니에요</p>
-										</div>
-									</div>
-									...
 								</div>
 
 								<!-- Controls -->

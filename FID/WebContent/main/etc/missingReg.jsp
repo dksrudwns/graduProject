@@ -304,7 +304,7 @@ form {
 			<div class="form-group form-inline">
 				<label for="name" class="control-label col-sm-2">보호자 전화번호</label> <input
 					type="text" class="form-control" id="pro_phon" name="pro_phon"
-					required="required" pattern="[0-9]" />
+					pattern="[0-9]{10,11}" maxlength="11" required="required"  />
 			</div>
 			<div class="form-group form-inline">
 				<label for="pro_idNum1" class="control-label col-sm-2">보호자

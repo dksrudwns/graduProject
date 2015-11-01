@@ -88,7 +88,7 @@
 		checkPn = 0;
 	}
 
-	function numCheck() {
+	function numCheckPro() {
 		var num = $('#pro_idNum1').val() + $('#pro_idNum2').val();
 		if (num == "") {
 			window.alert("보호자 주민번호를 입력해주세요");
@@ -108,7 +108,7 @@
 		}
 	}
 
-	function numCheckPro() {
+	function numCheck() {
 		var num = $('#idNum1').val() + $('#idNum2').val();
 		if (num == "") {
 			window.alert("주민번호를 입력해주세요");
@@ -316,7 +316,7 @@ form {
 					pattern="[0-9]{7}" maxlength="7" size="7" onkeypress="onlyNumber()"
 					required="required" onkeyup="checkNum(this)" /> <input
 					type="button" value="유효확인" class="btn btn-default"
-					onclick="numCheck()" />
+					onclick="numCheckPro()" />
 			</div>
 			<div>
 				<button class="btn btn-success btn-lg" type="submit">확인</button>

@@ -104,7 +104,7 @@ public class missingRegister extends HttpServlet {
 			pro_peopleNum = multi.getParameter("pro_idNum1") + multi.getParameter("pro_idNum2");
 			pro_phon = multi.getParameter("pro_phon");
 
-			if (peopleNum == "" || peopleNum == null || pro_peopleNum == null || pro_peopleNum == "") {
+			if (zipCode == null||zipCode == ""||peopleNum == "" || peopleNum == null || pro_peopleNum == null || pro_peopleNum == "") {
 				response.setCharacterEncoding("EUC-KR");
 				PrintWriter writer = response.getWriter();
 				writer.println("<script type='text/javascript'>");

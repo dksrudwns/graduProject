@@ -48,6 +48,17 @@ public class crimRegiser extends HttpServlet {
 		String sigungu = request.getParameter("sigungu");
 		String detail = request.getParameter("detail_1");
 
+		if (crimeArea == null || crimeArea == "" || peopleNum == "" || peopleNum == null) {
+			response.setCharacterEncoding("EUC-KR");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script type='text/javascript'>");
+			writer.println("alert('정보를 다시 확인하세요.');");
+			writer.println("history.go(-1);");
+			writer.println("</script>");
+			writer.flush();
+			return;
+		}
+
 		peopleInfoDAO pDAO = new peopleInfoDAO();
 		int checkp = pDAO.confirmPN(peopleNum);
 		if (checkp == 1) {

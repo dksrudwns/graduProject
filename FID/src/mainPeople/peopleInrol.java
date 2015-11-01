@@ -86,6 +86,16 @@ public class peopleInrol extends HttpServlet {
 			sigungu = multi.getParameter("sigungu");
 			detail = multi.getParameter("detail_1");
 			detailAddr = detail + ' ' + multi.getParameter("detail_2");
+			if (zipCode == null || zipCode == "" || peopleNum == "" || peopleNum == null) {
+				response.setCharacterEncoding("EUC-KR");
+				PrintWriter writer = response.getWriter();
+				writer.println("<script type='text/javascript'>");
+				writer.println("alert('정보를 다시 확인하세요.');");
+				writer.println("history.go(-1);");
+				writer.println("</script>");
+				writer.flush();
+				return;
+			}
 
 			Enumeration<?> files = multi.getFileNames();
 

@@ -39,12 +39,22 @@ public class traceRegister extends HttpServlet {
 		
 		request.setCharacterEncoding("utf-8");
 		
-		String name = request.getParameter("name");
 		String peopleNum = request.getParameter("idNum1") + request.getParameter("idNum2");
 		String traceCode = request.getParameter("rank");
 		String traceDate = request.getParameter("date");
 		String T_Money = request.getParameter("T_money");
 		String traceCondition = "Y";
+
+		if (peopleNum == "" || peopleNum == null) {
+			response.setCharacterEncoding("EUC-KR");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script type='text/javascript'>");
+			writer.println("alert('정보를 다시 확인하세요.');");
+			writer.println("history.go(-1);");
+			writer.println("</script>");
+			writer.flush();
+			return;
+		}
 	
 
 	

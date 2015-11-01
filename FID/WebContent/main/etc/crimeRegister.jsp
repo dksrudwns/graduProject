@@ -38,6 +38,7 @@
 		checkPn = 0;
 	}
 
+
 	function numCheck() {
 		var num = $('#idNum1').val() + $('#idNum2').val();
 		if (num == "") {

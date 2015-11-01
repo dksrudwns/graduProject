@@ -17,61 +17,43 @@
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="../../js/checkinfo.js"></script>
 <script type="text/javascript">
-		
-		var checkPn = "0";
-	
-		function inputCheck(f) {
-			
-			if (f.name.value == "") {
-				alert("이름을 입력해주세요");
-				f.name.focus();
-				return;
-			}
-			
-			if (f.zip_code.value == "") {
-				alert("지역정보를 입력해주세요");
-				f.zip_code.focus();
-				return;
-			}
-			if (f.idNum1.value == "" || f.idNum2.value == "") {
-				alert("주빈번호를 입력하세요");
-				f.idNum1.focus();
-				return;
-			}
-			if (f.rank.value == "0") {
-				alert("범죄 종류를 선택해 주세요");
-				f.rank.focus();
-				return;
-			}
-			if (checkPn== "0") {
-				alert("주민번호 중복을 확인해주세요");
-				f.idNum1.focus();
-				return;
-			}
-	
-			f.action = '/FID/traceRegister.do';
-			f.submit();
+	var checkPn = "0";
+
+	function checkSubmit() {
+		if (checkPn == "0") {
+			alert("주민번호 중복을 확인해주세요");
+			return;
 		}
-	
-		function numCheck(num) {
-			checkPn = 1;
-			tm = 1;
-			var wx = 300; //open 할 윈도우 크기 width
-			var wy = 150; //height
-			var sx = screen.width;
-			var sy = screen.height;
-			var x = (sx - wx) / 2;
-			var y = (sy - wy) / 2;
-			if (num == "") {
-				window.alert("주민번호를 입력해주세요");
-				document.registerForm.idNum1.focus();
-			} else {
-				var url = "/FID/num_check.jsp?num=" + num+"&tm="+tm;//URL Get 방식 전송
-				var wr = window.open(url, "주민번호 검색", "width=300,height=250");
-				wr.moveTo(x, y);
-			}
+		if (checkPn == 1) {
+			return true;
 		}
-	</script>
+		return false;
+
+	}
+	function defoultpn() {
+		checkPn = 0;
+	}
+
+	function numCheck() {
+		var num = $('#idNum1').val() + $('#idNum2').val();
+		if (num == "") {
+			window.alert("주민번호를 입력해주세요");
+		} else {
+			$.get("../../checkminNum.do", {
+				"num" : num
+			}).done(function(data) {
+				console.log(data);
+				if (data == 1) {
+					alert("등록가능합니다.");
+					checkPn = 1;
+				} else {
+					alert("인적등록부터 하세요.");
+					checkPn = 0;
+				}
+			});
+		}
+	}
+</script>
 
 <link href="../../css/bootstrap.min.css" rel="stylesheet">
 <style>
@@ -152,25 +134,20 @@ form {
 		<form class="form-horizontal" action="/FID/traceRegister.do"
 			method="post" name="regForm">
 			<div class="form-group form-inline">
-				<label for="name" class="control-label col-sm-2">이름</label> <input
-					type="text" class="form-control" id="name" name="name" size="15"
-					required="required" />
-			</div>
-			<div class="form-group form-inline">
 				<label for="idNum1" class="control-label col-sm-2">주민등록번호</label> <input
 					type="text" class="form-control" id="idNum1" name="idNum1" size="6"
 					maxlength="6" required="required" onkeypress="onlyNumber()"
-					onkeyup="checkNum(this)" /> - <input type="text"
-					class="form-control" id="idNum2" name="idNum2" size="7"
+					pattern="[0-9]{6}" onkeyup="checkNum(this)" /> - <input
+					type="text" class="form-control" id="idNum2" name="idNum2" size="7"
 					maxlength="7" required="required" onkeypress="onlyNumber()"
-					onkeyup="checkNum(this)" /> <input type="button"
-					class="btn btn-default" value="유효확인"
-					onclick="numCheck(this.form.idNum1.value+this.form.idNum2.value)" />
+					onkeyup="checkNum(this)" pattern="[0-9]{7}" /> <input
+					type="button" class="btn btn-default" value="유효확인"
+					onclick="numCheck()" />
 			</div>
 			<div class="form-group form-inline">
 				<label for="rank" class="control-label col-sm-2">수배 유형</label> <select
 					class="form-control" name="rank" id="rank" required="required">
-					<option value="" selected="">선택하세요</option>
+					<option value="" selected>선택하세요</option>
 					<option value="a">지명수배</option>
 					<option value="b">벌금수배</option>
 					<option value="c">지명통보</option>
@@ -179,17 +156,17 @@ form {
 			<div class="form-group form-inline">
 				<label for="date" class="control-label col-sm-2">수배 등록일</label> <input
 					type="date" class="form-control" id="date" name="date"
-					required="required" placeholder="연도-월-일" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))
-		       		"/>
+					required="required" placeholder="연도-월-일"
+					pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))
+		       		" />
 			</div>
 			<div class="form-group form-inline">
 				<label for="T_money" class="control-label col-sm-2">수배 금액</label> <input
-					type="number" class="form-control" id="T_money" name="T_money"
+					type="number" class="form-control" id="T_money" name="T_money" pattern="[0-9]{1,6}"
 					placeholder="단위:만 원" required="required" />
 			</div>
 			<div>
-				<button class="btn btn-success btn-lg" type="submit"
-					onclick="inputCheck(this.form);">확인</button>
+				<button class="btn btn-success btn-lg" type="submit">확인</button>
 			</div>
 		</form>
 	</div>

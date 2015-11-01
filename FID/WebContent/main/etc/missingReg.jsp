@@ -87,7 +87,9 @@
 	function defoultpn() {
 		checkPn = 0;
 	}
-
+	function defoultPropn() {
+		checkProPn = 0;
+	}
 	function numCheckPro() {
 		var num = $('#pro_idNum1').val() + $('#pro_idNum2').val();
 		if (num == "") {
@@ -309,10 +311,10 @@ form {
 			<div class="form-group form-inline">
 				<label for="pro_idNum1" class="control-label col-sm-2">보호자
 					주민번호</label> <input type="text" class="form-control" id="pro_idNum1"
-					name="pro_idNum1" size="6" pattern="[0-9]{6}" maxlength="6"
+					name="pro_idNum1" onfocus="defoultPropn()" size="6" pattern="[0-9]{6}" maxlength="6"
 					onkeypress="onlyNumber()" required="required"
 					onkeyup="checkNum(this)" /> - <input type="text"
-					class="form-control" id="pro_idNum2" name="pro_idNum2"
+					class="form-control" onfocus="defoultPropn()" id="pro_idNum2" name="pro_idNum2"
 					pattern="[0-9]{7}" maxlength="7" size="7" onkeypress="onlyNumber()"
 					required="required" onkeyup="checkNum(this)" /> <input
 					type="button" value="유효확인" class="btn btn-default"

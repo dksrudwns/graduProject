@@ -1,6 +1,8 @@
 package mainMissing;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,6 +38,16 @@ public class updatePro extends HttpServlet {
 		String phon= (String) request.getParameter("proPhon");
 		String pro = (String) request.getParameter("proNum");
 		String num = (String) request.getParameter("num");
+		if (phon == null||phon == ""||pro == "" || pro == null) {
+			response.setCharacterEncoding("EUC-KR");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script type='text/javascript'>");
+			writer.println("alert('보호자 정보를 다시 확인하세요.');");
+			writer.println("history.go(-1);");
+			writer.println("</script>");
+			writer.flush();
+			return;
+		}
 		System.out.println(phon+pro+num);
 		MissingpeDTO peDTO = new MissingpeDTO(num, pro, phon);
 		MissingpeDAO peDAO = new MissingpeDAO();

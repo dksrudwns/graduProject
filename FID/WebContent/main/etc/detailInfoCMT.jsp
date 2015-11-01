@@ -20,7 +20,6 @@
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <script src="../../js/checkinfo.js"></script>
 <script type="text/javascript">
-
 	function updateCrime(date) {
 		var t = date;
 		t.action = './updateCrime.do';
@@ -165,7 +164,7 @@ body {
 		</table>
 
 		<fieldset id="crime">
-			<table class="table table-striped crimetable">
+			<table class="table table-bordered crimetable">
 				<tr style="background-color: cyan">
 					<th>범죄 종류</th>
 					<th>범죄 지역</th>
@@ -229,7 +228,7 @@ body {
 		</fieldset>
 		<br>
 		<fieldset id="trace">
-			<table class="table table-striped tracetable">
+			<table class="table table-bordered tracetable">
 				<tr style="background-color: cyan">
 					<th>수배 종류</th>
 					<th>수배 금액</th>
@@ -282,9 +281,9 @@ body {
 								value="${trace.traceDate }"
 								pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))
 		       		"></td>
-							<td><input type="button" value="수정"
+							<td><input type="button" value="수정" class="btn btn-default"
 								onclick="updateTrace(this.form)"> <input type="button"
-								value="삭제" onclick='deleteTrace(this.form)'></td>
+								value="삭제" onclick='deleteTrace(this.form)' class="btn btn-default"></td>
 						</form>
 					</tr>
 				</c:forEach>
@@ -302,13 +301,12 @@ body {
 						<th>보호자 수정</th>
 						<td>&nbsp;&nbsp;</td>
 						<td>보호자 주민번호</td>
-						<td><input type="text" class="form-control" id="proNum"
-							required="required" 
-							name="proNum" pattern="[0-9]{11}">
-							<input type="text" style="width: 110px; display: inline-block; height: 25px;" class="form-control" id="proNum"
-					name="proNum" onfocus="defoultPropn()" size="6" pattern="[0-9]{13}" maxlength="13"
-					onkeypress="onlyNumber()" required="required" placeholder="ex)1111111235435"
-					onkeyup="checkNum(this)" /></td>
+						<td><input type="text"
+							style="width: 110px; display: inline-block; height: 25px;"
+							class="form-control" id="proNum" name="proNum"
+							onfocus="defoultPropn()" size="6" pattern="[0-9]{13}"
+							maxlength="13" onkeypress="onlyNumber()" required="required"
+							placeholder="ex)1111111235435" onkeyup="checkNum(this)" /></td>
 						<td><input type="text" class="sub" name="num"
 							value="${requestScope.peopleNum }"></td>
 					</tr>
@@ -326,7 +324,7 @@ body {
 				</table>
 
 			</form>
-			<table class="table table-striped missingtable">
+			<table class="table table-bordered missingtable">
 				<tr style="background-color: cyan">
 					<th>실종 종류</th>
 					<th>실종 지역</th>

@@ -30,8 +30,8 @@
 			height : 300
 		},
 		'minValue' : 0,
-		'maxValue' : 30,
-		'increment' : 5
+		'maxValue' : 14,
+		'increment' : 2
 	};
 
 	function getdata() {

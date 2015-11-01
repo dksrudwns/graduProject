@@ -64,7 +64,7 @@
 
 	<fieldset id="crime">
 		<legend>범죄</legend>
-		<table border="1">
+		<table border="1" class="table table-bordered">
 			<tr style="background-color: cyan">
 				<th>종류</th>
 				<th>범죄 지역</th>
@@ -81,9 +81,20 @@
 						CrimeDTO cDTO = vCDTO.get(i);
 						aDTO = aDAO.selectAddressCodeDAO(cDTO.getCrimeArea());
 						Crimeadd = aDTO.getSido() + " " + aDTO.getGugun() + " " + aDTO.getDetail();
+						
+						String type = null;
+						if(cDTO.getCrimeCode().equals("1"))
+							type = "살인";
+						else if(cDTO.getCrimeCode().equals("2"))
+							type = "절도";
+						else if(cDTO.getCrimeCode().equals("3"))
+							type = "폭행";
+						else
+							type = "성폭행";
+						
 			%>
 			<tr>
-				<td><%=cDTO.getCrimeCode()%></td>
+				<td><%=type%></td>
 				<td><%=Crimeadd%></td>
 				<td><%=cDTO.getCrimeDate()%></td>
 			</tr>
@@ -96,7 +107,7 @@
 
 	<fieldset id="trace">
 		<legend>수배</legend>
-		<table border="1">
+		<table border="1" class="table table-bordered">
 			<tr style="background-color: cyan">
 				<th>종류</th>
 				<th>수배금</th>
@@ -128,7 +139,7 @@
 
 	<fieldset id="missing">
 		<legend>실종</legend>
-		<table border="1">
+		<table border="1" class="table table-bordered">
 			<tr style="background-color: cyan">
 				<th>종류</th>
 				<th>실종 지역</th>
